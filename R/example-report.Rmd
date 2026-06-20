@@ -3,18 +3,19 @@ title: "Example Report"
 author: "Magdalena A. Tkacz"
 subtitle: "dataset: <to-do>"
 output:
-  bookdown::html_document2:
+  pdf_document:
+    toc: true
+    toc_depth: 3
+  html_document:
     df_print: paged
     theme: spacelab
     highlight: zenburn
-    toc: true
+    toc: yes
     toc_depth: 3
     toc_float:
-      collapsed: true
-      smooth_scroll: true
-  bookdown::pdf_document2:
-    toc: true
-    toc_depth: 3
+      collapsed: yes
+      smooth_scroll: yes
+    code_fold: hide
 ---
 
 ```{r setup, include=FALSE}
@@ -182,154 +183,1068 @@ summary(data)
 glimpse(data)
 ```
 
+### Variable Description
 
-## Variables
+The dataset contains a mixture of numerical and categorical variables. Understanding the role and data type of each variable is important for selecting appropriate preprocessing techniques, visualization methods, and modeling approaches. The following table summarizes the variables available in the dataset.
 
-Describe the variables used in the analysis.
+```{r variable-description, echo=FALSE}
+library(dplyr)
+library(tibble)
 
-## Initial Exploration
+variable_description <- tibble(
+  Variable = names(data),
+  Data_Type = sapply(data, function(x) class(x)[1]),
+  Missing_Values = sapply(data, function(x) sum(is.na(x)))
+)
+
+knitr::kable(
+  variable_description,
+  caption = "Summary of variables and missing values."
+)
+```
+
+## Data Quality Assessment
+
+The dataset contains several missing values affecting both numerical and categorical variables. Missing values are particularly common in the `notes` attribute, where the majority of observations contain no information.
+
+In addition, the dataset includes an identifier variable (`id`) which is not expected to contribute to predictive performance and may require removal before modeling.
+
+The `notes` variable contains missing values in the majority of observations and provides limited analytical value. Therefore, it was excluded from further analysis.
+
+
+### Missing Values
+
+Missing values were examined to assess the completeness of the dataset and identify variables requiring additional preprocessing.
+
+```{r missing-values, echo=FALSE}
+library(dplyr)
+library(knitr)
+
+missing_summary <- data.frame(
+  Variable = names(data),
+  Missing_Values = colSums(is.na(data)),
+  Missing_Percent = round(
+    100 * colSums(is.na(data)) / nrow(data),
+    2
+  )
+)
+
+missing_summary |>
+  arrange(desc(Missing_Values)) |>
+  kable(
+    caption = "Missing values by variable."
+  )
+```
+The dataset contains missing values in several variables. The highest proportion of missing data was observed in the `notes` attribute, while selected numerical and categorical variables also contain incomplete observations.
+
+The impact of missing values will be assessed during the data preparation phase, where appropriate handling strategies will be applied.
+
+
+```{r missing-values-plot, echo=FALSE, fig.height=4}
+library(ggplot2)
+
+missing_summary |>
+  filter(Missing_Values > 0) |>
+  ggplot(
+    aes(
+      x = reorder(Variable, Missing_Values),
+      y = Missing_Values
+    )
+  ) +
+  geom_col() +
+  coord_flip() +
+  labs(
+    title = "Missing Values by Variable",
+    x = "",
+    y = "Number of Missing Values"
+  ) +
+  theme_minimal()
+```
+The analysis revealed missing values in both numerical and categorical variables. The largest number of missing observations was found in the `notes` attribute, whereas the remaining variables contain only a relatively small proportion of incomplete records.
+
+The identified missing values will be addressed during the data preparation phase before model development.
+
+### Duplicates
 
 ```{r}
-# Initial exploration
+sum(duplicated(data))
 ```
+So, in more details:
+```{r}
+data_no_id <- dplyr::select(data, -id)
+
+sum(duplicated(data_no_id))
+```
+Several data quality issues were identified during the initial assessment. Missing values are present in both numerical and categorical variables, with the highest proportion observed in the `notes` attribute.
+
+In addition, a small number of duplicate observations were detected. These records will be reviewed during the data preparation phase to determine whether they should be retained or removed prior to model development.
+
+
+### Outliers
+
+Potential outliers were investigated using graphical methods and summary statistics. The objective was to identify observations that may disproportionately influence subsequent analyses and predictive models.
+
+### Outliers
+
+```{r outliers-boxplots2, echo=FALSE, fig.height=6, fig.width=8}
+library(tidyverse)
+
+data |>
+  select(where(is.numeric)) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "Variable",
+    values_to = "Value"
+  ) |>
+  ggplot(aes(y = Value)) +
+  geom_boxplot() +
+  facet_wrap(~ Variable, scales = "free") +
+  labs(
+    title = "Boxplots of Numerical Variables"
+  ) +
+  theme_minimal()
+```
+Several observations appear outside the whiskers of the boxplots. These values were retained at this stage of the analysis and will be further evaluated during data preparation.
+
+
+## Initial Exploratory Analysis
+
+An initial exploratory analysis was conducted to examine the distributions of individual variables and identify potential relationships between them. The analysis focuses on understanding the overall characteristics of the dataset and highlighting patterns that may be relevant for subsequent modeling tasks.
+
+### Distribution of Numerical Variables
+
+Histograms were generated for all numerical variables to examine their distributions, identify potential skewness, detect unusual observations, and assess overall data quality. This step provides an initial understanding of the range and shape of each variable before data cleaning and modelling.
+
+```{r}
+data |>
+  select(where(is.numeric)) |>
+  pivot_longer(everything()) |>
+  ggplot(aes(value)) +
+  geom_histogram(bins = 20) +
+  facet_wrap(~name, scales = "free")+
+  theme_minimal()
+```
+The distributions of numerical variables exhibit several irregularities, including missing values and extreme observations. These characteristics may affect subsequent analyses and limit the interpretability of visualizations and predictive models. The observed patterns indicate that data preparation will be required before proceeding to model development.
+
+
+### Distribution of Categorical Variables
+
+Distribution of Categorical Variables The distribution of categorical variables was examined to understand the composition of the dataset and identify potential imbalances between categories. Bar charts were used to visualize the frequency of observations within each category.
+
+```{r}
+data |>
+  select(where(is.character)) |>
+  pivot_longer(everything()) |>
+  ggplot(aes(value)) +
+  geom_bar() +
+  facet_wrap(~name, scales = "free")
+```
+The examined categorical variables show varying frequencies across categories. These distributions contribute to a better understanding of the dataset and may be relevant during model development and evaluation.
+
+### Relationships and Correlation Between Variables
+
+Relationships between numerical variables were explored using a scatterplot and scatterplot matrix. This visualization allows pairwise comparison of a certain or all numerical attributes and helps identify potential correlations, clusters, trends, and unusual observations that may influence subsequent modelling steps.
+
+```{r}
+ggplot(
+  data,
+  aes(
+    bill_length_mm,
+    flipper_length_mm,
+    color = species
+  )
+) +
+  geom_point()
+```
+The initial scatterplots were strongly influenced by extreme observations, making it difficult to visually assess relationships between variables. This suggests the presence of potential outliers that may require further investigation before meaningful interpretation can be performed.
+
+```{r}
+library(GGally)
+
+data |>
+  select(where(is.numeric)) |>
+  GGally::ggpairs(
+    progress = FALSE,
+    title = "Scatterplot Matrix of Numerical Variables"
+  )
+```
+
+
+The visualization suggests that some numerical variables may be related. A more detailed investigation is required to determine whether these relationships are meaningful and relevant for predictive modelling.
+
+The scatterplot matrix serves as an initial assessment of relationships between numerical variables. Visual inspection suggests that some variables may be correlated, although the strength and significance of these relationships cannot be reliably determined from the plots alone. Therefore, a dedicated correlation analysis is recommended to support feature selection and improve understanding of the dataset structure.
+
+### Correlation Analysis
+Correlation analysis was performed to quantify relationships between numerical variables. Understanding these relationships can support feature selection, help identify redundant information, and provide additional insight into the structure of the dataset.
+```{r}
+library(corrplot)
+
+cor_matrix <- data |>
+  select(where(is.numeric)) |>
+  cor(use = "pairwise.complete.obs")
+
+corrplot(
+  cor_matrix,
+  method = "color",
+  type = "upper",
+  addCoef.col = "black",
+  tl.col = "black",
+  tl.srt = 45
+)
+```
+
+The results indicate varying levels of correlation among the numerical variables. While some relationships appear stronger than others, the practical significance of these associations should be evaluated within the context of the modelling task. Correlation analysis serves as a useful exploratory tool but should not be used as the sole criterion for feature selection.
+
+The correlation matrix provides a quantitative summary of linear relationships between numerical variables. Some variables exhibit stronger associations than others, suggesting that they may contain related information. Correlation analysis can help identify potentially redundant features and support feature selection during model development. However, correlation measures only linear relationships and should always be interpreted alongside exploratory visualisations and domain knowledge.
+
+
+<div style="
+background-color:#e8f1f8;
+border-left:8px solid #5c7fa3;
+color:#111111;
+padding:12px 16px;
+margin:12px 0;
+">
+
+ℹ️️ **Correlation does not imply dependence**
+
+Correlation measures only linear relationships between variables. A low correlation coefficient does not necessarily indicate the absence of a relationship.
+
+Variables may exhibit non-linear dependencies that are not captured by correlation analysis. A classic example is the *Anscombe Quartet*, where several datasets share nearly identical summary statistics and correlation coefficients while displaying very different patterns when visualized.
+
+For this reason, correlation analysis should always be complemented by exploratory visualisations and domain knowledge.
+
+</div>
+
 
 ## Initial Observations
 
-Describe your initial observations.
+The dataset contains both numerical and categorical variables. Initial inspection suggests that some data cleaning will be necessary due to missing values and potential inconsistencies. Further exploratory analysis is required to better understand the structure and quality of the data.
+
 
 # 3. Data Preparation
 
+The exploratory analysis revealed several data quality issues that may affect the performance of predictive models. Therefore, a data cleaning process was performed to improve consistency, reduce noise, and prepare the dataset for further analysis and modelling.
+
 ## Missing Values
 
-Describe how missing values were identified and handled.
+Missing values were identified in several variables. The notes column contained mostly missing observations and limited analytical value; therefore, it was removed from further analysis. Remaining missing values will be handled using appropriate preprocessing techniques during model development.
 
+Removing `notes`:
 ```{r}
-# Missing values analysis
+data <- data |>
+  select(-notes)
 ```
+Drop na in `species`:
+```{r}
+data <- data |>
+  drop_na(species)
+```
+
+## Duplicates
+
+Duplicate observations were identified and removed to prevent potential bias during model training and evaluation.
+```{r}
+data <- data |>
+  distinct()
+```
+
 
 ## Data Cleaning
 
-Describe any cleaning operations performed.
+### Outliers
+
+```{r}
+summary(data)
+```
+
+Extreme values outside plausible biological ranges were identified during exploratory analysis. These observations were considered data quality issues and were removed prior to modelling.
+
+```{r}
+data <- data |>
+  filter(
+    bill_length_mm < 100,
+    flipper_length_mm < 400,
+    body_mass_g < 10000,
+    year < 2100
+  )
+```
+
+
 
 ## Transformations
 
-Describe any transformations applied to the data.
+### Standardizing Categorical Variables
+
+```{r}
+data <- data |>
+  mutate(
+    species = str_to_title(species),
+    island = str_to_title(island),
+    sex = str_to_lower(sex)
+  )
+```
+And
+
+```{r}
+data <- data |>
+  mutate(
+    species = recode(
+      species,
+      "Gent00" = "Gentoo"
+    ),
+    sex = recode(
+      sex,
+      "m" = "male",
+      "f" = "female"
+    )
+  )
+```
+Several categorical variables contained inconsistent labels resulting from differences in spelling, capitalisation, and data entry errors. Categories were standardised to ensure consistent representation across the dataset.
+
 
 ## Feature Selection / Engineering
 
-Describe any variables removed, added, or modified.
+
+Several modifications were applied during the data preparation stage.
+
+The `notes` variable was removed because it contained a large proportion of missing values and provided limited analytical value. Duplicate records were removed to improve data consistency.
+
+Categorical variables were standardized to eliminate inconsistencies caused by differences in spelling, capitalization, and data entry errors. Extreme observations identified as likely data quality issues were removed from the dataset.
+
+No new variables were created at this stage. Feature engineering will be limited to preprocessing steps required for model development, such as encoding categorical variables and handling remaining missing values.
+
+Potential additional feature engineering techniques, such as creating derived variables or applying transformations, may be explored depending on the modelling approach and project objectives.
+
+
+## Check
+
+```{r}
+glimpse(data)
+
+summary(data)
+```
+Category labels were standardized; however, some missing values remained in the sex variable. These observations were retained at this stage and will be handled during the modelling phase using an appropriate preprocessing strategy.
+
+
+### Missing Values
+
+Missing values were examined to assess the completeness of the dataset and identify variables requiring additional preprocessing.
+
+```{r missing-values2, echo=FALSE}
+library(dplyr)
+library(knitr)
+
+missing_summary <- data.frame(
+  Variable = names(data),
+  Missing_Values = colSums(is.na(data)),
+  Missing_Percent = round(
+    100 * colSums(is.na(data)) / nrow(data),
+    2
+  )
+)
+
+missing_summary |>
+  arrange(desc(Missing_Values)) |>
+  kable(
+    caption = "Missing values by variable."
+  )
+```
+The dataset still contains missing values in two variables. 
+The impact of missing values will be assessed during the data preparation before modeling phase, where appropriate handling strategies will be applied.
+
+
+```{r missing-values2-plot, echo=FALSE, fig.height=4}
+library(ggplot2)
+
+missing_summary |>
+  filter(Missing_Values > 0) |>
+  ggplot(
+    aes(
+      x = reorder(Variable, Missing_Values),
+      y = Missing_Values
+    )
+  ) +
+  geom_col() +
+  coord_flip() +
+  labs(
+    title = "Missing Values by Variable",
+    x = "",
+    y = "Number of Missing Values"
+  ) +
+  theme_minimal()
+```
+
+### Duplicates
+
+```{r}
+sum(duplicated(data))
+```
+
+### Outliers
+
+
+```{r outliers-boxplots, echo=FALSE, fig.height=6, fig.width=8}
+library(tidyverse)
+
+data |>
+  select(where(is.numeric)) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "Variable",
+    values_to = "Value"
+  ) |>
+  ggplot(aes(y = Value)) +
+  geom_boxplot() +
+  facet_wrap(~ Variable, scales = "free") +
+  labs(
+    title = "Boxplots of Numerical Variables"
+  ) +
+  theme_minimal()
+```
+
 
 # 4. Exploratory Data Analysis (EDA)
 
 ## Distribution Analysis
 
+
 ```{r}
-# Distribution analysis
+data |>
+  select(where(is.numeric)) |>
+  pivot_longer(everything()) |>
+  ggplot(aes(value)) +
+  geom_histogram(bins = 20) +
+  facet_wrap(~name, scales = "free")
 ```
 
 ### Interpretation
 
-Describe your findings.
+> The distributions provide an overview of the numerical variables and their ranges. Several variables exhibit unusual observations that may require further investigation. Understanding these distributions is important for selecting appropriate preprocessing and modelling techniques.
+
 
 ## Relationship Analysis
 
+**Introduction**
+
+> Relationships between numerical variables were explored using a scatterplot matrix. This visualization provides an overview of pairwise interactions and may reveal patterns worth investigating in later stages of the analysis.
+
 ```{r}
-# Relationship analysis
+library(GGally)
+
+data |>
+  select(where(is.numeric)) |>
+  ggpairs(progress = FALSE)
 ```
 
 ### Interpretation
 
-Describe your findings.
+> The scatterplot matrix provides an initial overview of potential relationships among variables. Several patterns can be observed and may warrant further investigation during subsequent exploratory analysis and feature selection stages.
+
 
 ## Correlation Analysis
 
+**Introduction**
+
+> Correlation analysis was performed to quantify linear relationships between numerical variables. Understanding these relationships can support feature selection and provide additional insight into the structure of the dataset.
+
 ```{r}
-# Correlation analysis
+library(corrplot)
+
+cor_matrix <- data |>
+  select(where(is.numeric)) |>
+  cor(use = "pairwise.complete.obs")
+
+corrplot(
+  cor_matrix,
+  method = "color",
+  type = "upper",
+  addCoef.col = "black",
+  tl.col = "black",
+  tl.srt = 45
+)
 ```
 
 ### Interpretation
 
-Describe your findings.
+> The results indicate varying levels of correlation among the numerical variables. While some relationships appear stronger than others, the practical significance of these associations should be evaluated within the context of the modelling task. Correlation analysis serves as a useful exploratory tool but should not be used as the sole criterion for feature selection.
+
+```html
+<div style="
+background-color:#e8f1f8;
+border-left:8px solid #5c7fa3;
+color:#111111;
+padding:12px 16px;
+margin:12px 0;
+">
+
+💡 **Correlation does not imply dependence**
+
+Correlation measures only linear relationships between variables. Variables with low correlation may still be related through non-linear patterns. The *Anscombe Quartet* is a well-known example demonstrating why visual inspection should accompany statistical summaries.
+
+</div>
+```
+
 
 ## Outlier Analysis
 
+**Introduction**
+
+> Outlier analysis was performed to identify observations that differ substantially from the majority of the data. Such observations may represent valid extreme cases or potential data quality issues.
+
 ```{r}
-# Outlier analysis
+data |>
+  select(where(is.numeric)) |>
+  pivot_longer(everything()) |>
+  ggplot(aes(y = value, x = name)) +
+  geom_boxplot() +
+  coord_flip()
 ```
 
 ### Interpretation
 
-Describe your findings.
+> Several observations fall outside the typical range of values observed in the dataset. These observations should be reviewed carefully, as they may influence statistical summaries and predictive model performance.
+
+## Exploring Body Mass Differences
+
+Exploratory data analysis is not limited to relationships between numerical variables. Relationships between categorical and numerical variables can also provide valuable insights. The following example examines differences in body mass across sex categories.
+
+```{r}
+data |>
+  filter(!is.na(sex)) |>
+  ggplot(
+    aes(
+      x = sex,
+      y = body_mass_g,
+      fill = sex
+    )
+  ) +
+  geom_violin(trim = FALSE) +
+  geom_boxplot(
+    width = 0.15,
+    fill = "white"
+  ) +
+  theme_minimal()
+```
+```{r}
+data |>
+  filter(!is.na(sex)) |>
+  group_by(sex) |>
+  summarise(
+    Mean_Body_Mass = mean(
+      body_mass_g,
+      na.rm = TRUE
+    ),
+    SD = sd(
+      body_mass_g,
+      na.rm = TRUE
+    )
+  )
+```
+
+Exploratory analysis suggests that body mass differs between male and female penguins. Although the distributions overlap, male penguins tend to have higher body mass on average. This observation indicates that sex may provide useful information for predictive modelling.
 
 ## Summary of EDA
 
-Summarize the most important observations.
+> The exploratory analysis provided a better understanding of the dataset structure and quality. Several data quality issues were identified, including missing values, inconsistent category labels, duplicate records, and unusual observations. The analysis also revealed potential relationships between variables that may be useful for predictive modelling. These findings support the data preparation decisions described in the previous section and provide a foundation for model development.
+
+
 
 # 5. Modeling
 
-## Model 1
+## Data Preparation Strategy
 
-### Model Description
+The exploratory analysis revealed several data quality issues, including missing values, duplicate records, inconsistent categorical labels, and extreme observations. Appropriate preprocessing steps were therefore applied to improve data consistency and prepare the dataset for machine learning models.
 
-Explain why this model was selected.
-
-### Implementation
-
-```{r}
-# Model implementation
+```r
+library(tidyverse)
+library(tidymodels)
 ```
 
-### Results
+## Selected Features
+
+The target variable for this project is `species`.
+
+The following variables were retained as potential predictors:
+
+- bill_length_mm
+- bill_depth_mm
+- flipper_length_mm
+- body_mass_g
+- island
+- sex
+- year
+
+The `notes` variable was excluded from further analysis due to its large number of missing values and limited analytical relevance.
 
 ```{r}
-# Model evaluation
+model_data <- data |>
+  select(
+    species,
+    bill_length_mm,
+    bill_depth_mm,
+    flipper_length_mm,
+    body_mass_g,
+    island,
+    sex,
+    year
+  )
 ```
 
-### Interpretation
+## Data Cleaning
 
-Interpret the results.
-
-## Model 2
-
-### Model Description
-
-Explain why this model was selected.
-
-### Implementation
+Duplicate observations were removed and categorical variables were standardized to ensure consistent representation across the dataset. Obvious data quality issues and implausible observations identified during exploratory analysis were addressed prior to modelling.
 
 ```{r}
-# Model implementation
+model_data <- model_data |>
+  distinct() |>
+  mutate(
+    species = str_to_title(species),
+    island = str_to_title(island),
+    sex = str_to_lower(sex),
+    sex = recode(
+      sex,
+      "m" = "male",
+      "f" = "female"
+    ),
+    species = recode(
+      species,
+      "Gent00" = "Gentoo"
+    )
+  ) |>
+  filter(
+    bill_length_mm < 100 | is.na(bill_length_mm),
+    flipper_length_mm < 400 | is.na(flipper_length_mm),
+    body_mass_g < 10000 | is.na(body_mass_g),
+    year < 2100 | is.na(year)
+  )
 ```
 
-### Results
+## Handling Missing Values
+
+Missing values remained in selected variables after the cleaning process. These observations were retained and handled through model-specific preprocessing techniques during model training.
+
+Three possible strategies may be considered for the `sex` variable:
+
+- removing observations with missing values,
+- replacing missing values with a new category,
+- imputing missing values during model training.
+
+In this report, the third approach is preferred because it keeps more observations in the dataset and allows preprocessing to be included directly in the modelling workflow.
+
+### Option 1: Removing Records with Missing `sex`
 
 ```{r}
-# Model evaluation
+model_data_option_1 <- model_data |>
+  drop_na(sex)
 ```
 
-### Interpretation
+This approach is simple, but it reduces the size of the dataset. It may be acceptable when the number of missing observations is small, but it can also remove potentially useful information.
 
-Interpret the results.
+### Option 2: Creating an `unknown` Category
 
-# 6. Evaluation
+```{r}
+model_data_option_2 <- model_data |>
+  mutate(
+    sex = replace_na(sex, "unknown")
+  )
+```
+
+This approach preserves observations and treats missing values as a separate category. It may be useful when missingness itself could carry information, but it also introduces an additional artificial category.
+
+### Option 3: Imputation During Model Training
+
+```{r}
+model_data_option_3 <- model_data
+```
+
+In this approach, missing values are not manually replaced at this stage. They are handled inside the modelling recipe.
+
+```{r}
+library(tidymodels)
+model_recipe <- recipe(species ~ ., data = model_data_option_3) |>
+  step_impute_mode(sex) |>
+  step_impute_median(all_numeric_predictors()) |>
+  step_dummy(all_nominal_predictors()) |>
+  step_normalize(all_numeric_predictors())
+```
+
+This strategy keeps preprocessing consistent between training and testing data and reduces the risk of data leakage.
+
+## Encoding and Scaling
+
+The dataset contains both numerical and categorical variables. Appropriate preprocessing techniques, including categorical encoding and numerical scaling where required, were included in the modelling workflow.
+
+```{r}
+model_recipe <- recipe(species ~ ., data = model_data_option_3) |>
+  step_impute_mode(all_nominal_predictors()) |>
+  step_impute_median(all_numeric_predictors()) |>
+  step_dummy(all_nominal_predictors()) |>
+  step_normalize(all_numeric_predictors())
+```
+
+Categorical variables were encoded into numerical form using dummy variables. Numerical variables were normalized to make them comparable in scale, which is especially important for models sensitive to variable magnitude.
+
+## Training and Testing Sets
+
+To evaluate model performance objectively, the dataset was divided into separate training and testing subsets. The training set was used for model development, while the testing set was reserved for final performance evaluation.
+
+```{r}
+set.seed(123)
+
+data_split <- initial_split(
+  model_data_option_3,
+  prop = 0.8,
+  strata = species
+)
+
+train_data <- training(data_split)
+test_data  <- testing(data_split)
+```
+
+```{r}
+model_recipe <- recipe(species ~ ., data = train_data) |>
+  step_impute_mode(all_nominal_predictors()) |>
+  step_impute_median(all_numeric_predictors()) |>
+  step_dummy(all_nominal_predictors()) |>
+  step_normalize(all_numeric_predictors())
+```
+
+The split was stratified by the target variable to preserve the distribution of penguin species in both subsets.
+
+## Prepared Data for Model 1
+
+The prepared recipe can now be used as part of the modelling workflow. This ensures that all preprocessing steps are applied consistently during model training and evaluation.
+
+```{r}
+model_1_spec <- decision_tree() |>
+  set_engine("rpart") |>
+  set_mode("classification")
+
+model_1_workflow <- workflow() |>
+  add_recipe(model_recipe) |>
+  add_model(model_1_spec)
+```
+
+## Summary
+
+The dataset was cleaned and prepared for predictive modelling. The resulting data contains consistent variable definitions and provides a suitable basis for building and evaluating classification models.
+
+The final preparation workflow includes:
+
+- removal of non-informative variables,
+- standardization of categorical labels,
+- treatment of implausible values,
+- imputation of remaining missing values,
+- encoding of categorical predictors,
+- normalization of numerical predictors,
+- division into training and testing subsets.
+
+These steps provide a structured and reproducible foundation for the modelling stage.
+
+## Check #2: Data Validation
+
+After the initial cleaning step, the dataset was checked again to verify whether implausible values had been removed successfully. This validation revealed that some unrealistic observations were still present and required additional filtering.
+
+```{r}
+summary(model_data)
+
+```
+There are still strange data:
+- Min body_mass_g = -500
+- Min flipper_length_mm = 1
+- Max year = 2099
+So:
+
+```{r}
+model_data <- model_data |>
+  filter(
+    between(bill_length_mm, 20, 70) | is.na(bill_length_mm),
+    between(flipper_length_mm, 150, 250) | is.na(flipper_length_mm),
+    between(body_mass_g, 2000, 8000) | is.na(body_mass_g),
+    between(year, 2007, 2009) | is.na(year)
+  )
+```
+
+```{r}
+summary(model_data)
+
+```
+
+he additional validation step confirmed that extreme values remaining after the first cleaning pass were removed. This illustrates that data preparation is an iterative process: cleaning decisions should be followed by checks to verify whether the dataset is actually ready for modelling.
+
+
+
+
+
+## Models
+
+Before fitting classification models, the target variable and categorical predictors were converted to factors. This ensures that the modelling workflow treats the task as classification rather than regression.
+
+```{r}
+model_data_option_3 <- model_data_option_3 |>
+  mutate(
+    species = as.factor(species),
+    island = as.factor(island),
+    sex = as.factor(sex)
+  )
+```
+
+```{r}
+set.seed(123)
+
+data_split <- initial_split(
+  model_data_option_3,
+  prop = 0.8,
+  strata = species
+)
+
+train_data <- training(data_split)
+test_data  <- testing(data_split)
+```
+
+```{r}
+model_recipe <- recipe(species ~ ., data = train_data) |>
+  step_impute_mode(all_nominal_predictors()) |>
+  step_impute_median(all_numeric_predictors()) |>
+  step_dummy(all_nominal_predictors())
+```
+
+```{r}
+classification_metrics <- metric_set(
+  accuracy,
+  kap
+)
+```
+
+### Model 1
+
+#### Model Description
+
+A Decision Tree classifier was selected as the first model. This model is easy to interpret and provides a useful baseline for classification tasks. Decision trees split the data into smaller groups based on predictor variables and generate classification rules that can be inspected and explained.
+
+This model was selected because it is transparent, relatively simple, and suitable as an initial reference model for predicting penguin species.
+
+#### Implementation
+
+```{r}
+dt_model <- decision_tree() |>
+  set_engine("rpart") |>
+  set_mode("classification")
+
+dt_workflow <- workflow() |>
+  add_recipe(model_recipe) |>
+  add_model(dt_model)
+
+dt_fit <- fit(
+  dt_workflow,
+  data = train_data
+)
+```
+Which gives:
+```{r}
+library(rpart.plot)
+
+dt_tree <- extract_fit_engine(dt_fit)
+
+rpart.plot(
+  dt_tree,
+  type = 2,
+  extra = 104,
+  fallen.leaves = TRUE,
+  main = "Decision Tree for Penguin Species Classification"
+)
+```
+The decision tree visualization shows the main decision rules used by the model to classify penguin species. This makes the model easier to interpret than more complex ensemble methods. However, a single tree may be less stable and less accurate than models such as Random Forest.
+#### Results
+
+```{r}
+dt_predictions <- predict(
+  dt_fit,
+  test_data
+) |>
+  bind_cols(test_data)
+
+dt_metrics <- dt_predictions |>
+  classification_metrics(
+    truth = species,
+    estimate = .pred_class
+  )
+
+dt_metrics
+```
+
+```{r}
+dt_conf_mat <- dt_predictions |>
+  conf_mat(
+    truth = species,
+    estimate = .pred_class
+  )
+
+dt_conf_mat
+```
+
+#### Interpretation
+
+The Decision Tree model provides a baseline classification result. Its performance metrics show how well a relatively simple and interpretable model can distinguish between penguin species using the selected predictor variables.
+
+The confusion matrix can be used to identify which species are classified correctly and where misclassifications occur.
+
+
+
+### Model 2
+
+#### Model Description
+
+A Random Forest classifier was selected as the second model. Random Forest extends the idea of a single decision tree by combining multiple trees into an ensemble model. This approach often improves predictive performance and reduces the risk of overfitting.
+
+This model was selected because it is robust, works well with mixed predictor variables, and often provides strong performance in classification problems.
+
+#### Implementation
+
+```{r}
+library(ranger)
+rf_model <- rand_forest(
+  trees = 500
+) |>
+  set_engine("ranger", importance = "impurity") |>
+  set_mode("classification")
+
+rf_workflow <- workflow() |>
+  add_recipe(model_recipe) |>
+  add_model(rf_model)
+
+rf_fit <- fit(
+  rf_workflow,
+  data = train_data
+)
+```
+ Checking variable importance:
+```{r}
+library(vip)
+
+vip(
+  extract_fit_parsnip(rf_fit)$fit,
+  num_features = 10
+)
+```
+ Variable importance indicates which predictors contributed most to the classification process. The plot helps identify variables that are most influential when distinguishing between penguin species.
+
+With `ggplot` we can confirm:
+```{r}
+rf_engine <- extract_fit_engine(rf_fit)
+
+importance_df <- tibble(
+  Variable = names(rf_engine$variable.importance),
+  Importance = rf_engine$variable.importance
+)
+
+importance_df |>
+  arrange(desc(Importance)) |>
+  ggplot(aes(
+    x = reorder(Variable, Importance),
+    y = Importance
+  )) +
+  geom_col() +
+  coord_flip() +
+  labs(
+    title = "Random Forest Variable Importance",
+    x = "",
+    y = "Importance"
+  )
+```
+
+
+#### Results
+
+```{r}
+rf_predictions <- predict(
+  rf_fit,
+  test_data
+) |>
+  bind_cols(test_data)
+
+rf_metrics <- rf_predictions |>
+  classification_metrics(
+    truth = species,
+    estimate = .pred_class
+  )
+
+rf_metrics
+```
+
+```{r}
+rf_conf_mat <- rf_predictions |>
+  conf_mat(
+    truth = species,
+    estimate = .pred_class
+  )
+
+rf_conf_mat
+```
+
+#### Interpretation
+
+The Random Forest model was evaluated using the testing dataset. The obtained metrics indicate how effectively the model predicts penguin species based on the selected variables.
+
+The results can be compared with the Decision Tree model to assess whether the ensemble approach improves predictive performance.
+
 
 ## Model Comparison
 
-Provide a comparison of the evaluated models.
+### Results
 
-| Metric | Model 1 | Model 2 |
-|---------|---------|---------|
-| | | |
-| | | |
-| | | |
+```{r}
+model_comparison <- bind_rows(
+  dt_metrics |> mutate(model = "Decision Tree"),
+  rf_metrics |> mutate(model = "Random Forest")
+) |>
+  select(model, .metric, .estimate)
+
+model_comparison
+```
+
+```{r}
+model_comparison |>
+  ggplot(aes(x = model, y = .estimate, fill = .metric)) +
+  geom_col(position = "dodge") +
+  labs(
+    title = "Model comparison",
+    x = "Model",
+    y = "Metric value"
+  )
+```
+
+### Interpretation
+
+Both models were evaluated using the same testing dataset. The comparison allows assessment of whether the more complex Random Forest model provides better predictive performance than the simpler Decision Tree model.
+
+The final model selection should consider both predictive performance and interpretability.
+
 
 ## Discussion
 
-Discuss the strengths and weaknesses of the models.
+Two classification models were developed and evaluated: a Decision Tree and a Random Forest.
+
+The Decision Tree model offers a high level of interpretability. The resulting tree structure can be visualized and easily understood, making it useful for explaining classification decisions. However, a single tree may be sensitive to variations in the training data and can be prone to overfitting.
+
+The Random Forest model addresses some of these limitations by combining multiple decision trees into an ensemble. This approach generally improves predictive performance and robustness while reducing the impact of individual tree errors. The trade-off is reduced interpretability, as the model's decision-making process becomes more complex.
+
+Overall, both models demonstrate how machine learning techniques can be applied to classification problems. The comparison highlights the common trade-off between model interpretability and predictive performance.
 
 ## Limitations
 
-Discuss any limitations of the data, methodology, or results.
+Several limitations should be considered when interpreting the results.
+
+First, the dataset required extensive cleaning due to missing values, inconsistent categorical labels, duplicate records, and implausible observations. The quality of the final models therefore depends on the assumptions made during the data preparation stage.
+
+Second, the analysis was conducted using a single train-test split. Different random splits or cross-validation procedures could produce slightly different performance estimates.
+
+Third, the project focused on a limited number of classification algorithms. Other approaches, such as k-Nearest Neighbours, Support Vector Machines, Gradient Boosting, or Neural Networks, may yield different results.
+
+Finally, the dataset represents a specific collection of penguin observations. Consequently, conclusions should be interpreted within the context of this dataset and should not be generalized beyond the available data without additional validation.
+
+
 
 # 7. Recommendations
 
@@ -337,22 +1252,198 @@ Provide recommendations based on the results of the analysis.
 
 # 8. Conclusions
 
+The objective of this project was to develop and evaluate machine learning models capable of predicting penguin species based on morphological measurements and selected categorical attributes.
+
+The project objectives were successfully achieved. Data quality issues, including missing values, inconsistent category labels, duplicate observations, and implausible values, were identified and addressed during the data preparation stage. This improved the overall consistency and usability of the dataset.
+
+A meaningful exploratory data analysis was performed, providing insights into variable distributions, relationships between predictors, correlations, and potential outliers. These analyses supported subsequent data preparation and modelling decisions.
+
+Two classification models, a Decision Tree and a Random Forest, were developed and evaluated using the prepared dataset. Model performance was assessed using objective evaluation metrics and confusion matrices, allowing a direct comparison of the two approaches.
+
+The results demonstrate that machine learning techniques can effectively classify penguin species using the available predictor variables. While the Decision Tree offered greater interpretability, the Random Forest generally provided a more robust classification approach.
+
+Overall, the success criteria defined at the beginning of the project were met:
+
+- data quality issues were identified and addressed;
+- meaningful exploratory analysis was performed;
+- two classification models were developed;
+- model performance was evaluated and compared;
+- conclusions were supported by analytical evidence obtained throughout the CRISP-DM process.
+
+The project illustrates the importance of systematic data preparation, exploratory analysis, and model evaluation when developing predictive solutions based on real-world data.
+
+
 ## Summary
 
-Summarize the project.
+This project followed the CRISP-DM methodology to develop and evaluate machine learning models for penguin species classification.
+
+The analysis included data understanding, data cleaning, exploratory data analysis, feature preparation, model development, and model evaluation. Data quality issues were identified and addressed prior to modelling. Two classification algorithms, a Decision Tree and a Random Forest, were trained and evaluated using a dedicated testing dataset.
+
+The results demonstrate the importance of systematic data preparation and model evaluation when building predictive solutions based on real-world data.
 
 ## Lessons Learned
 
-Describe what was learned during the analysis.
+Several important lessons emerged from this analysis.
+
+First, data quality has a substantial impact on the modelling process. Missing values, inconsistent labels, duplicate observations, and implausible values required attention before reliable models could be developed.
+
+Second, exploratory data analysis provided valuable insights into the structure of the dataset and helped guide data preparation decisions. Visualisation proved particularly useful for identifying unusual observations and understanding relationships between variables.
+
+Third, different machine learning models offer different advantages. Simpler models such as Decision Trees provide interpretability, while ensemble methods such as Random Forests often deliver improved predictive performance.
+
+Finally, model evaluation should extend beyond a single metric and include multiple perspectives, such as confusion matrices and comparative performance analysis.
 
 ## Future Work
 
-Suggest possible future improvements or extensions.
+Several extensions could be explored in future iterations of the project.
+
+Additional classification algorithms, such as Support Vector Machines, k-Nearest Neighbours, Gradient Boosting, or Neural Networks, could be evaluated and compared with the models developed in this study.
+
+More advanced feature engineering techniques could also be investigated to improve predictive performance. Cross-validation procedures could provide more robust estimates of model generalisation performance.
+
+Finally, the analysis could be extended by incorporating additional biological or environmental variables, allowing more comprehensive modelling of penguin characteristics and species differentiation.
+
 
 # References
 
 List all external sources used.
 
-# Appendix (Optional)
+# Appendix A (Optional)
 
 Additional tables, figures, code snippets, or supplementary material.
+
+# Appendix B -Explanatory Data Analysis Report
+
+
+<div style="
+background-color:#e8f0f7;  
+border-left:8px solid #4575b4;  
+color:#111111;
+">
+💡 Accessibility and Visual Design
+
+The visualisations in this report were designed with readability and accessibility in mind. Colour palettes and formatting choices were selected to ensure that charts remain interpretable for a wide audience, including individuals with common forms of colour vision deficiency.
+
+In addition to colour, visual distinctions such as point shapes, labels, and layout were used to improve clarity. These design choices help ensure that the presented insights remain understandable when viewed on different screens, projectors, or printed materials.
+
+Effective data communication depends not only on accurate analysis but also on the ability to present results in a clear, accessible, and audience-friendly manner.
+</div>
+
+## Understanding Penguin Characteristics
+
+The purpose of this report is not to build predictive models, but to communicate selected insights discovered in the penguin dataset. While exploratory analysis focuses on discovering patterns, explanatory analysis focuses on presenting findings in a clear and meaningful way for an audience.
+
+The dataset contains measurements of penguins belonging to three species: Adelie, Chinstrap, and Gentoo. Several physical characteristics were recorded, including bill dimensions, flipper length, body mass, sex, and island of origin.
+
+
+## Insight 1: Penguin Species Differ in Physical Characteristics
+
+One of the most visible patterns in the dataset is the difference in body measurements between species.
+
+When comparing bill dimensions and flipper length, the three species form distinct groups. Gentoo penguins generally have longer flippers and greater body mass, while Adelie penguins tend to be smaller. Chinstrap penguins often occupy an intermediate position.
+
+These differences suggest that morphological measurements contain useful information for distinguishing between species.
+
+```{r}
+ggplot(
+  model_data,
+  aes(
+    x = bill_length_mm,
+    y = flipper_length_mm,
+    color = species,
+    shape = species
+  )
+) +
+  geom_point(
+    size = 2,
+    alpha = 0.8
+  ) +
+  scale_color_manual(
+    values = c(
+      "Adelie" = "#0072B2",
+      "Chinstrap" = "#E69F00",
+      "Gentoo" = "#009E73"
+    )
+  ) +
+  theme_minimal()
+```
+The three penguin species occupy different regions of the feature space. This suggests that morphological measurements contain sufficient information to distinguish species and explains why classification models achieve good predictive performance.
+
+
+## Insight 2: Species Distribution Across Islands
+
+Species distribution was examined across islands to explore whether penguin species occur uniformly throughout the study area. Understanding geographic distribution patterns can provide additional biological context and help explain why location-related variables may be useful for classification
+
+
+```{r}
+ggplot(
+  data,
+  aes(
+    x = island,
+    fill = species
+  )
+) +
+  geom_bar(
+    position = "fill",
+    color = "white",
+    linewidth = 0.3
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Adelie" = "#0072B2",
+      "Chinstrap" = "#E69F00",
+      "Gentoo" = "#009E73"
+    )
+  ) +
+  scale_y_continuous(
+    labels = scales::percent
+  ) +
+  theme_minimal() +
+  labs(
+    title = "Species Composition Differs Across Islands",
+    subtitle = "Each island exhibits a distinct species profile",
+    x = "Island",
+    y = "Percentage of Observations",
+    fill = "Species"
+  )
+```
+
+One of the clearest patterns in the dataset is that penguin species are not evenly distributed across islands. Certain islands are associated with particular species, creating distinct geographic signatures. This observation demonstrates that location alone can provide valuable clues about species identity and helps explain why the island variable contributes to classification performance
+
+
+## Insight 3: Data Quality Directly Affects Analysis Quality
+
+The dataset contained several data quality issues, including:
+
+* missing values,
+* duplicate observations,
+* inconsistent category labels,
+* implausible numerical values.
+
+These problems required cleaning before reliable analysis could be performed.
+
+### Why It Matters
+
+Poor data quality can distort visualisations, bias statistical summaries, and reduce model performance. Data preparation is therefore a critical step in any data mining project.
+
+
+## Insight 4: Visualisation Reveals Patterns Hidden in Summary Statistics
+
+Several relationships became visible only after visual exploration of the data.
+
+Histograms revealed unusual observations and potential outliers. Scatterplots highlighted relationships between variables. Correlation analysis quantified some of these relationships, while boxplots illustrated differences between groups.
+
+### Why It Matters
+
+Numerical summaries alone rarely provide a complete understanding of a dataset. Visualisation remains one of the most effective tools for communicating analytical findings.
+
+
+## Key Takeaways
+
+The analysis demonstrates that:
+
+* penguin species exhibit distinct physical characteristics;
+* body mass differs between male and female penguins;
+* data quality strongly influences analytical outcomes;
+* visualisation is essential for discovering and communicating insights.
+

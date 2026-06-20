@@ -41,9 +41,9 @@ id,species,island,bill_length_mm,bill_depth_mm,flipper_length_mm,body_mass_g,sex
 404,Gentoo,Biscoe,48.3,14.6,211,,female,2009,
 306,Adelie,Dream,42.3,20.2,199,4353,female,2008,
 329,Adelie,Torgersen,35.1,16.9,176,,female,2009,
-155,Adelie,Biscoe,36.5,17.3,185,2747,female,2007,poprawna obs.
+155,Adelie,Biscoe,36.5,17.3,185,2747,female,2007,obs ok
 160,Chinstrap,Dream,50.2,19.6,196,3671,female,2009,
-85,Adelie,Biscoe,41.3,17.9,193,3423,male,2009,poprawna obs.
+85,Adelie,Biscoe,41.3,17.9,193,3423,male,2009,obs ok
 487,Adelie,Torgersen,33.5,18.8,199,3883,female,2008,
 16,Chinstrap,Dream,41.5,,196,3784,male,2007,
 210,Chinstrap,Dream,44.9,17.9,193,3917,female,2009,
@@ -54,7 +54,7 @@ id,species,island,bill_length_mm,bill_depth_mm,flipper_length_mm,body_mass_g,sex
 420,Gentoo,Biscoe,51.7,15.9,1,5478,,2008,
 34,Chinstrap,Dream,54.0,18.9,193,3671,female,2009,
 450,Gentoo,Biscoe,46.9,14.7,220,4917,male,2008,
-294,Gentoo,Biscoe,51.2,15.0,210,4935,female,2008,poprawna obs.
+294,Gentoo,Biscoe,51.2,15.0,210,4935,female,2008,obs ok
 214,Gentoo,Biscoe,50.8,14.3,,4776,female,2009,
 506,Gentoo,Biscoe,41.1,15.7,209,6843,female,2009,
 296,Adelie,Torgersen,40.1,17.2,193,3304,,2009,
@@ -117,7 +117,7 @@ id,species,island,bill_length_mm,bill_depth_mm,flipper_length_mm,body_mass_g,sex
 297,Chinstrap,Dream,50.7,16.9,195,3679,female,2008,OK 
 418,Gentoo,Biscoe,45.4,15.8,218,5648,female,2008,
 186,Adelie,Dream,35.1,19.9,179,2995,female,2009,
-79,Chinstrap,Dream,42.9,20.5,,3356,male,2009,poprawna obs.
+79,Chinstrap,Dream,42.9,20.5,,3356,male,2009,obs ok
 289,Gentoo,Biscoe,42.7,14.6,210,4983,male,2009,
 28,Gentoo,Biscoe,,14.2,213,5257,male,2007, ok 
 501,Adelie,Torgersen,41.1,16.2,177,3857,,2008,
@@ -149,10 +149,14 @@ id,species,island,bill_length_mm,bill_depth_mm,flipper_length_mm,body_mass_g,sex
 425,Adelie,Torgersen,41.0,19.1,178,3945,female,2008,
 459,Adelie,Biscoe,36.5,17.2,186,3441,male,2007,
 283,Gentoo,Biscoe,52.4,13.6,216,,male,2008,
-362,Adelie,Biscoe,42.1,20.7,172,2648,female,2009,poprawna obs.
+362,Adelie,Biscoe,42.1,20.7,172,2648,female,2009, obs. ok
 168,Adelie,Dream,42.0,18.8,186,3692,male,2007,
 138,Adelie,Dream,44.5,16.8,181,3562,,2008,
 263,Adelie,Torgersen,35.1,19.5,184,3343,male,2007,
+40,Gentoo,Biscoe,46.1,13.9,228,4902,male,2008,
+270,Gentoo,Biscoe,45.4,16.1,218,4991,f,2009,
+262,Adelie,Dream,,19.0,187,3842,male,2008,
+321,Gentoo,Biscoe,50.0,,214,4581,female,2008,
 27,Adelie,Torgersen,45.1,20.2,192,3721,male,2009,
 484,Adelie,Dream,38.5,20.2,194,2999,male,2007,
 117,Chinstrap,Dream,49.0,17.7,212,2851,male,2008,
@@ -200,7 +204,7 @@ id,species,island,bill_length_mm,bill_depth_mm,flipper_length_mm,body_mass_g,sex
 325,Adelie,Torgersen,37.8,16.8,190,3363,female,2007,
 343,Adelie,Biscoe,35.5,16.2,185,3914,male,2008,
 153,Chinstrap,Dream,49.1,19.7,191,3762,male,2008,
-288,Gentoo,Biscoe,50.2,13.5,209,4381,female,2007,poprawna obs.
+288,Gentoo,Biscoe,50.2,13.5,209,4381,female,2007, obs. OK
 215,Gentoo,Biscoe,44.8,15.6,214,5131,male,2007,
 365,Adelie,Biscoe,40.3,,190,3351,,2008,
 454,Adelie,Biscoe,34.4,18.0,191,,female,2009,
@@ -229,7 +233,7 @@ id,species,island,bill_length_mm,bill_depth_mm,flipper_length_mm,body_mass_g,sex
 383,Gentoo,Biscoe,45.6,15.9,210,4996,female,2009,
 442,Gentoo,Biscoe,50.3,15.3,210,5058,female,2008,
 507,Adelie,Biscoe,40.9,17.6,192,3961,male,2009,
-285,Gentoo,Biscoe,53.3,15.1,,5005,male,2009,brak danych
+285,Gentoo,Biscoe,53.3,15.1,,5005,male,2009,no-data
 510,Gentoo,Biscoe,46.8,15.0,224,5803,male,2009,
 485,Gentoo,Biscoe,51.7,16.5,219,5204,female,2008,ok
 41,Gentoo,Biscoe,44.2,15.5,221,5089,,2009,
@@ -249,7 +253,7 @@ id,species,island,bill_length_mm,bill_depth_mm,flipper_length_mm,body_mass_g,sex
 43,Gentoo,Biscoe,48.2,14.5,226,4269,male,2007,
 421,Chinstrap,Dream,,19.0,189,4187,male,2008,
 441,Chinstrap,Dream,47.2,,199,,female,2009,
-179,Gentoo,Biscoe,45.2,15.7,218,4699,female,2007,sprawdzić
+179,Gentoo,Biscoe,45.2,15.7,218,4699,female,2007,check
 326,Adelie,Torgersen,35.9,18.5,193,4061,female,2008,
 107,Gentoo,Biscoe,49.0,15.4,220,5152,male,2009,
 194,Gentoo,Biscoe,46.2,15.2,205,4665,female,2007,
@@ -257,8 +261,8 @@ id,species,island,bill_length_mm,bill_depth_mm,flipper_length_mm,body_mass_g,sex
 141,Gentoo,Biscoe,45.9,13.3,217,5575,female,2008,
 265,Chinstrap,Dream,48.5,19.0,213,4111,female,2008,
 271,Adelie,Torgersen,40.9,18.4,193,3434,male,2007,
-172,Chinstrap,Dream,46.0,18.9,189,4299,male,2007,brak danych
-282,Adelie,Dream,,19.0,194,3847,female,2009,sprawdzić
+172,Chinstrap,Dream,46.0,18.9,189,4299,male,2007,no-data
+282,Adelie,Dream,,19.0,194,3847,female,2009,check
 286,Chinstrap,Dream,53.4,18.8,188,3636,female,2007,
 110,Chinstrap,Dream,49.9,18.1,186,3771,male,2008,
 165,Gentoo,Biscoe,49.7,15.2,217,4711,male,2009,
@@ -284,6 +288,7 @@ id,species,island,bill_length_mm,bill_depth_mm,flipper_length_mm,body_mass_g,sex
 8,Adelie,Torgersen,39.3,18.8,199,3744,female,2008,
 451,Adelie,Torgersen,39.3,19.5,193,3179,male,2007,
 125,Gentoo,Biscoe,47.5,15.2,207,5302,male,2007,
+217,Gentoo,Biscoe,46.1,16.0,221,4918,male,2008,
 24,Chinstrap,Dream,43.5,16.9,191,3016,male,2009,
 242,Chinstrap,Dream,53.7,16.7,187,3888,male,2009,  
 382,Gentoo,Biscoe,43.1,13.6,216,6016,male,2007,
@@ -302,7 +307,7 @@ id,species,island,bill_length_mm,bill_depth_mm,flipper_length_mm,body_mass_g,sex
 22,Adelie,Torgersen,40.0,17.5,197,3487,male,2009,
 493,Adelie,Torgersen,35.6,18.0,191,4210,,2008,
 502,Chinstrap,Dream,47.6,20.3,195,4284,male,2008,
-174,Gentoo,Biscoe,45.5,15.3,220,4932,female,2009,sprawdzić
+174,Gentoo,Biscoe,45.5,15.3,220,4932,female,2009,check
 319,Gentoo,Biscoe,48.8,13.7,222,5512,male,2007,
 9,Gentoo,Biscoe,48.8,16.7,,5342,female,1999,
 231,Chinstrap,Dream,48.3,17.7,209,4326,,2009,
@@ -385,14 +390,14 @@ id,species,island,bill_length_mm,bill_depth_mm,flipper_length_mm,body_mass_g,sex
 471,Chinstrap,Dream,42.8,16.6,190,3957,male,2007,
 373,Adelie,Dream,39.5,17.7,192,3244,female,2007,
 293,Adelie,Biscoe,39.2,21.1,180,3142,female,2009,
-37,Gentoo,Biscoe,47.2,16.2,,5119,male,2007,poprawna obs.
+37,Gentoo,Biscoe,47.2,16.2,,5119,male,2007,obs ok
 422,Gentoo,Biscoe,42.5,15.4,223,4934,male,2007,
 469,Adelie,Dream,,17.2,199,3111,female,2007,
 53,Adelie,Biscoe,40.2,18.2,185,3154,female,2009,OK
 414,Chinstrap,Dream,49.6,17.3,195,3872,male,2007,
 367,Adelie,Torgersen,37.6,19.0,190,3933,female,2008,
 227,Gentoo,Biscoe,47.0,15.5,213,5134,female,2008,
-55,Adelie,Dream,39.9,17.6,187,3.43,female,2008,poprawna obs.
+55,Adelie,Dream,39.9,17.6,187,3.43,female,2008,obs ok
 330,Chinstrap,Dream,54.4,19.0,191,3942,male,2008,
 315,Gentoo,Biscoe,52.6,15.6,206,4816,female,2007,
 460,Gentoo,Biscoe,53.0,15.7,208,5464,male,2007,
@@ -438,7 +443,7 @@ id,species,island,bill_length_mm,bill_depth_mm,flipper_length_mm,body_mass_g,sex
 339,Gentoo,Biscoe,46.8,15.0,224,5803,male,2009,
 240,Gentoo,Biscoe,49.8,14.2,213,5245,male,2009,
 151,Gentoo,Biscoe,,14.9,215,5254,male,2008,
-130,Adelie,Dream,38.2,18.0,195,3583,m,2008,sprawdzić
+130,Adelie,Dream,38.2,18.0,195,3583,m,2008,check
 444,Chinstrap,Dream,48.5,,194,3859,female,2008,
 357,Gentoo,Biscoe,43.3,16.2,212,,female,2009,
 57,Gentoo,Biscoe,,15.5,218,5010,male,2008,
@@ -492,7 +497,7 @@ id,species,island,bill_length_mm,bill_depth_mm,flipper_length_mm,body_mass_g,sex
 354,Adelie,Torgersen,42.8,18.3,193,3222,,2009,
 347,Chinstrap,Dream,45.3,18.4,210,3883,male,2008,
 173,Adelie,Torgersen,39.2,18.9,199,2723,male,2007,
-267,Adelie,Torgersen,43.9,18.6,188,4532,male,2007,brak danych
+267,Adelie,Torgersen,43.9,18.6,188,4532,male,2007,no-data
 100,Adelie,DREAM,35.7,18.6,187,3528,female,2009,
 395,Gentoo,Biscoe,42.7,15.7,209,4612,male,2008,
 302,Adelie,Torgersen,37.9,17.2,189,4043,male,2008,OK 

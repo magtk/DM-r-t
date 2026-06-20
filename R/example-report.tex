@@ -1,0 +1,2270 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Example Report},
+  pdfauthor={Magdalena A. Tkacz},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Example Report}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{dataset:}
+\author{Magdalena A. Tkacz}
+\date{}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+This document provides an example report structure based on the CRISP-DM
+methodology.
+
+Students may use, modify, or extend the template as appropriate for
+their project.
+
+The practical examples presented in this report are based on
+\texttt{penguin\_mess}, a modified version of the
+\texttt{palmerpenguins} dataset created for educational purposes.
+
+The dataset was intentionally altered to include selected data quality
+issues and should not be regarded as the original
+\texttt{palmerpenguins} dataset.
+
+\section{Assessment Summary}\label{assessment-summary}
+
+Student name: Pen Guin
+
+Intended grade:☐ 3.0 ☐ 3.5 ☑ 4.0 ☐ 4.5 ☐ 5.0
+
+\section{Student Declaration}\label{student-declaration}
+
+By submitting this report, I declare that:
+
+\begin{itemize}
+\tightlist
+\item
+  I understand all parts of the submitted work;
+\item
+  I am able to explain and justify the analytical decisions presented in
+  the report;
+\item
+  the self-assessment table has been completed honestly;
+\item
+  any use of AI tools was limited to assistance and does not substitute
+  for my own understanding of the analysis;
+\item
+  all external sources and tools used during the project have been
+  properly acknowledged.
+\end{itemize}
+
+Submission of this report constitutes acceptance of this declaration.
+
+\section{0. Executive Summary}\label{executive-summary}
+
+\subsection{Report Summary}\label{report-summary}
+
+This report presents a complete Data Mining workflow based on the
+CRISP-DM methodology. The analysis uses the penguin\_mess dataset, a
+modified version of the Palmer Penguins dataset prepared for educational
+purposes.
+
+The primary objective of the project is to predict penguin species using
+morphological measurements and selected categorical attributes.
+
+The analysis follows the CRISP-DM (Cross-Industry Standard Process for
+Data Mining) methodology, progressing through business understanding,
+data understanding, data preparation, exploratory analysis, modeling,
+and evaluation.
+
+Two classification models were developed and compared. The results
+demonstrate the importance of proper data preparation and feature
+selection when building predictive models.
+
+\subsection{Success Criteria}\label{success-criteria}
+
+The project will be considered successful if:
+
+\begin{itemize}
+\tightlist
+\item
+  data quality issues are identified and addressed;
+\item
+  meaningful exploratory analysis is performed;
+\item
+  at least two classification models are developed;
+\item
+  model performance is evaluated and compared;
+\item
+  conclusions are supported by analytical evidence.
+\end{itemize}
+
+\section{1. Business Understanding}\label{business-understanding}
+
+The objective of this project is to develop a predictive model capable
+of identifying penguin species based on available measurements and
+characteristics.
+
+Although the dataset is educational in nature, the problem reflects a
+common Data Mining scenario in which historical observations are used to
+classify new cases. The project also aims to demonstrate the complete
+CRISP-DM process rather than maximize predictive performance.
+
+The project aims to answer the following question:
+
+\begin{quote}
+Can penguin species be accurately predicted using the available
+measurements and characteristics?
+\end{quote}
+
+\subsection{Project Scope}\label{project-scope}
+
+The analysis includes: - data understanding and quality assessment; -
+data preparation and cleaning; - exploratory data analysis (EDA); -
+development of classification models; - model evaluation and comparison;
+- interpretation of results.
+
+The project does not aim to build a production-ready system. Instead, it
+serves as a demonstration of the CRISP-DM process and fundamental Data
+Mining techniques.
+
+\subsection{Problem Statement}\label{problem-statement}
+
+Given a set of penguin observations containing morphological
+measurements and categorical characteristics, the objective is to
+develop a predictive model capable of correctly identifying the species
+of each penguin.
+
+The project investigates which variables are most informative for
+species classification and evaluates whether reliable predictions can be
+obtained from the available data.
+
+\subsection{Objective}\label{objective}
+
+The objective of this project is to investigate whether penguin species
+can be accurately predicted using available morphological measurements
+and categorical attributes.
+
+To achieve this goal, the dataset will be explored, cleaned, and
+prepared for modeling. Multiple classification models will be developed
+and compared in order to identify the most suitable approach for this
+prediction task.
+
+\subsection{Expected Outcome}\label{expected-outcome}
+
+The expected outcome of this project is the development of a
+classification model capable of predicting penguin species based on
+available measurements and categorical attributes. It is expected that
+the analysis will identify variables that are most informative for
+species classification and reveal patterns that distinguish different
+species.
+
+Furthermore, the project is expected to demonstrate the impact of data
+preparation and feature selection on model performance, as well as
+provide a comparison of alternative modeling approaches.
+
+\section{2. Data Understanding}\label{data-understanding}
+
+The purpose of this phase is to become familiar with the dataset and
+assess its suitability for the intended analysis. This includes
+examining the structure of the data, identifying variable types,
+evaluating data quality, and detecting potential issues that may affect
+subsequent stages of the project.
+
+Particular attention is given to missing values, inconsistencies,
+unusual observations, and the distribution of individual variables.
+Understanding these characteristics is essential before proceeding to
+data preparation and model development.
+
+\subsection{Dataset Description}\label{dataset-description}
+
+The dataset was imported and inspected to understand its structure,
+variable types, and overall characteristics.
+
+An initial review was performed to identify the number of observations,
+available variables, data types, and potential data quality issues that
+may require attention during the preparation phase.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}
+  \FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"penguins\_mess.csv"}\NormalTok{)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Basic Dataset
+Information}\label{basic-dataset-information}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{dim}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 520  10
+\end{verbatim}
+
+So dataset has 520 observations and 10 variables.
+
+Summary statistics
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        id          species             island          bill_length_mm  
+##  Min.   :  1.0   Length:520         Length:520         Min.   :  0.50  
+##  1st Qu.:129.8   Class :character   Class :character   1st Qu.: 39.42  
+##  Median :258.5   Mode  :character   Mode  :character   Median : 43.85  
+##  Mean   :257.7                                         Mean   : 45.63  
+##  3rd Qu.:385.2                                         3rd Qu.: 48.20  
+##  Max.   :515.0                                         Max.   :999.00  
+##                                                        NA's   :26      
+##  bill_depth_mm   flipper_length_mm  body_mass_g        sex           
+##  Min.   :12.60   Min.   :   1.0    Min.   : -500   Length:520        
+##  1st Qu.:15.60   1st Qu.: 189.0    1st Qu.: 3563   Class :character  
+##  Median :17.60   Median : 196.0    Median : 4043   Mode  :character  
+##  Mean   :17.25   Mean   : 219.2    Mean   : 4332                     
+##  3rd Qu.:18.80   3rd Qu.: 213.0    3rd Qu.: 4862                     
+##  Max.   :21.70   Max.   :9999.0    Max.   :99000                     
+##  NA's   :22      NA's   :20        NA's   :25                        
+##       year         notes          
+##  Min.   :1999   Length:520        
+##  1st Qu.:2007   Class :character  
+##  Median :2008   Mode  :character  
+##  Mean   :2008                     
+##  3rd Qu.:2009                     
+##  Max.   :2099                     
+## 
+\end{verbatim}
+
+\subsection{Dataset Structure}\label{dataset-structure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{glimpse}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 520
+## Columns: 10
+## $ id                <dbl> 4, 322, 105, 309, 69, 101, 334, 406, 58, 49, 467, 45~
+## $ species           <chr> "Gentoo", "Adelie", "Gentoo", "Adelie", "Adelie", "A~
+## $ island            <chr> "Biscoe", "Torgersen", "Biscoe", "Torgersen", "Torge~
+## $ bill_length_mm    <dbl> 46.8, 35.9, 48.6, 37.9, 39.3, 41.9, 46.1, 41.8, 35.9~
+## $ bill_depth_mm     <dbl> 15.4, 19.0, 14.7, 19.8, 19.6, 18.9, 14.6, 17.9, 17.5~
+## $ flipper_length_mm <dbl> 217, 201, 217, 198, NA, 194, 208, 192, 193, 206, 192~
+## $ body_mass_g       <dbl> 4706, 2886, 4644, 3514, 3514, 3080, 4874, 4222, 4254~
+## $ sex               <chr> NA, "male", "female", "male", "female", "male", "mal~
+## $ year              <dbl> 2009, 2007, 2009, 2007, 2009, 2007, 2007, 2008, 2009~
+## $ notes             <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
+\end{verbatim}
+
+\subsubsection{Variable Description}\label{variable-description}
+
+The dataset contains a mixture of numerical and categorical variables.
+Understanding the role and data type of each variable is important for
+selecting appropriate preprocessing techniques, visualization methods,
+and modeling approaches. The following table summarizes the variables
+available in the dataset.
+
+\begin{longtable}[]{@{}llr@{}}
+\caption{Summary of variables and missing values.}\tabularnewline
+\toprule\noalign{}
+Variable & Data\_Type & Missing\_Values \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+Variable & Data\_Type & Missing\_Values \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+id & numeric & 0 \\
+species & character & 0 \\
+island & character & 0 \\
+bill\_length\_mm & numeric & 26 \\
+bill\_depth\_mm & numeric & 22 \\
+flipper\_length\_mm & numeric & 20 \\
+body\_mass\_g & numeric & 25 \\
+sex & character & 41 \\
+year & numeric & 0 \\
+notes & character & 484 \\
+\end{longtable}
+
+\subsection{Data Quality Assessment}\label{data-quality-assessment}
+
+The dataset contains several missing values affecting both numerical and
+categorical variables. Missing values are particularly common in the
+\texttt{notes} attribute, where the majority of observations contain no
+information.
+
+In addition, the dataset includes an identifier variable (\texttt{id})
+which is not expected to contribute to predictive performance and may
+require removal before modeling.
+
+The \texttt{notes} variable contains missing values in the majority of
+observations and provides limited analytical value. Therefore, it was
+excluded from further analysis.
+
+\subsubsection{Missing Values}\label{missing-values}
+
+Missing values were examined to assess the completeness of the dataset
+and identify variables requiring additional preprocessing.
+
+\begin{longtable}[]{@{}llrr@{}}
+\caption{Missing values by variable.}\tabularnewline
+\toprule\noalign{}
+& Variable & Missing\_Values & Missing\_Percent \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+& Variable & Missing\_Values & Missing\_Percent \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+notes & notes & 484 & 93.08 \\
+sex & sex & 41 & 7.88 \\
+bill\_length\_mm & bill\_length\_mm & 26 & 5.00 \\
+body\_mass\_g & body\_mass\_g & 25 & 4.81 \\
+bill\_depth\_mm & bill\_depth\_mm & 22 & 4.23 \\
+flipper\_length\_mm & flipper\_length\_mm & 20 & 3.85 \\
+id & id & 0 & 0.00 \\
+species & species & 0 & 0.00 \\
+island & island & 0 & 0.00 \\
+year & year & 0 & 0.00 \\
+\end{longtable}
+
+The dataset contains missing values in several variables. The highest
+proportion of missing data was observed in the \texttt{notes} attribute,
+while selected numerical and categorical variables also contain
+incomplete observations.
+
+The impact of missing values will be assessed during the data
+preparation phase, where appropriate handling strategies will be
+applied.
+
+\pandocbounded{\includegraphics[keepaspectratio]{example-report_files/figures/missing-values-plot-1.pdf}}
+The analysis revealed missing values in both numerical and categorical
+variables. The largest number of missing observations was found in the
+\texttt{notes} attribute, whereas the remaining variables contain only a
+relatively small proportion of incomplete records.
+
+The identified missing values will be addressed during the data
+preparation phase before model development.
+
+\subsubsection{Duplicates}\label{duplicates}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(}\FunctionTok{duplicated}\NormalTok{(data))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+So, in more details:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_no\_id }\OtherTok{\textless{}{-}}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(data, }\SpecialCharTok{{-}}\NormalTok{id)}
+
+\FunctionTok{sum}\NormalTok{(}\FunctionTok{duplicated}\NormalTok{(data\_no\_id))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 19
+\end{verbatim}
+
+Several data quality issues were identified during the initial
+assessment. Missing values are present in both numerical and categorical
+variables, with the highest proportion observed in the \texttt{notes}
+attribute.
+
+In addition, a small number of duplicate observations were detected.
+These records will be reviewed during the data preparation phase to
+determine whether they should be retained or removed prior to model
+development.
+
+\subsubsection{Outliers}\label{outliers}
+
+Potential outliers were investigated using graphical methods and summary
+statistics. The objective was to identify observations that may
+disproportionately influence subsequent analyses and predictive models.
+
+\subsubsection{Outliers}\label{outliers-1}
+
+\pandocbounded{\includegraphics[keepaspectratio]{example-report_files/figures/outliers-boxplots2-1.pdf}}
+Several observations appear outside the whiskers of the boxplots. These
+values were retained at this stage of the analysis and will be further
+evaluated during data preparation.
+
+\subsection{Initial Exploratory
+Analysis}\label{initial-exploratory-analysis}
+
+An initial exploratory analysis was conducted to examine the
+distributions of individual variables and identify potential
+relationships between them. The analysis focuses on understanding the
+overall characteristics of the dataset and highlighting patterns that
+may be relevant for subsequent modeling tasks.
+
+\subsubsection{Distribution of Numerical
+Variables}\label{distribution-of-numerical-variables}
+
+Histograms were generated for all numerical variables to examine their
+distributions, identify potential skewness, detect unusual observations,
+and assess overall data quality. This step provides an initial
+understanding of the range and shape of each variable before data
+cleaning and modelling.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{pivot\_longer}\NormalTok{(}\FunctionTok{everything}\NormalTok{()) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(value)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{bins =} \DecValTok{20}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{name, }\AttributeTok{scales =} \StringTok{"free"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{example-report_files/figures/unnamed-chunk-7-1.pdf}}
+The distributions of numerical variables exhibit several irregularities,
+including missing values and extreme observations. These characteristics
+may affect subsequent analyses and limit the interpretability of
+visualizations and predictive models. The observed patterns indicate
+that data preparation will be required before proceeding to model
+development.
+
+\subsubsection{Distribution of Categorical
+Variables}\label{distribution-of-categorical-variables}
+
+Distribution of Categorical Variables The distribution of categorical
+variables was examined to understand the composition of the dataset and
+identify potential imbalances between categories. Bar charts were used
+to visualize the frequency of observations within each category.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.character)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{pivot\_longer}\NormalTok{(}\FunctionTok{everything}\NormalTok{()) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(value)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{name, }\AttributeTok{scales =} \StringTok{"free"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{example-report_files/figures/unnamed-chunk-8-1.pdf}}
+The examined categorical variables show varying frequencies across
+categories. These distributions contribute to a better understanding of
+the dataset and may be relevant during model development and evaluation.
+
+\subsubsection{Relationships and Correlation Between
+Variables}\label{relationships-and-correlation-between-variables}
+
+Relationships between numerical variables were explored using a
+scatterplot and scatterplot matrix. This visualization allows pairwise
+comparison of a certain or all numerical attributes and helps identify
+potential correlations, clusters, trends, and unusual observations that
+may influence subsequent modelling steps.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}
+\NormalTok{  data,}
+  \FunctionTok{aes}\NormalTok{(}
+\NormalTok{    bill\_length\_mm,}
+\NormalTok{    flipper\_length\_mm,}
+    \AttributeTok{color =}\NormalTok{ species}
+\NormalTok{  )}
+\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{example-report_files/figures/unnamed-chunk-9-1.pdf}}
+The initial scatterplots were strongly influenced by extreme
+observations, making it difficult to visually assess relationships
+between variables. This suggests the presence of potential outliers that
+may require further investigation before meaningful interpretation can
+be performed.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(GGally)}
+
+\NormalTok{data }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric)) }\SpecialCharTok{|\textgreater{}}
+\NormalTok{  GGally}\SpecialCharTok{::}\FunctionTok{ggpairs}\NormalTok{(}
+    \AttributeTok{progress =} \ConstantTok{FALSE}\NormalTok{,}
+    \AttributeTok{title =} \StringTok{"Scatterplot Matrix of Numerical Variables"}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{example-report_files/figures/unnamed-chunk-10-1.pdf}}
+
+The visualization suggests that some numerical variables may be related.
+A more detailed investigation is required to determine whether these
+relationships are meaningful and relevant for predictive modelling.
+
+The scatterplot matrix serves as an initial assessment of relationships
+between numerical variables. Visual inspection suggests that some
+variables may be correlated, although the strength and significance of
+these relationships cannot be reliably determined from the plots alone.
+Therefore, a dedicated correlation analysis is recommended to support
+feature selection and improve understanding of the dataset structure.
+
+\subsubsection{Correlation Analysis}\label{correlation-analysis}
+
+Correlation analysis was performed to quantify relationships between
+numerical variables. Understanding these relationships can support
+feature selection, help identify redundant information, and provide
+additional insight into the structure of the dataset.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(corrplot)}
+
+\NormalTok{cor\_matrix }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{cor}\NormalTok{(}\AttributeTok{use =} \StringTok{"pairwise.complete.obs"}\NormalTok{)}
+
+\FunctionTok{corrplot}\NormalTok{(}
+\NormalTok{  cor\_matrix,}
+  \AttributeTok{method =} \StringTok{"color"}\NormalTok{,}
+  \AttributeTok{type =} \StringTok{"upper"}\NormalTok{,}
+  \AttributeTok{addCoef.col =} \StringTok{"black"}\NormalTok{,}
+  \AttributeTok{tl.col =} \StringTok{"black"}\NormalTok{,}
+  \AttributeTok{tl.srt =} \DecValTok{45}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{example-report_files/figures/unnamed-chunk-11-1.pdf}}
+
+The results indicate varying levels of correlation among the numerical
+variables. While some relationships appear stronger than others, the
+practical significance of these associations should be evaluated within
+the context of the modelling task. Correlation analysis serves as a
+useful exploratory tool but should not be used as the sole criterion for
+feature selection.
+
+The correlation matrix provides a quantitative summary of linear
+relationships between numerical variables. Some variables exhibit
+stronger associations than others, suggesting that they may contain
+related information. Correlation analysis can help identify potentially
+redundant features and support feature selection during model
+development. However, correlation measures only linear relationships and
+should always be interpreted alongside exploratory visualisations and
+domain knowledge.
+
+ℹ️️ \textbf{Correlation does not imply dependence}
+
+Correlation measures only linear relationships between variables. A low
+correlation coefficient does not necessarily indicate the absence of a
+relationship.
+
+Variables may exhibit non-linear dependencies that are not captured by
+correlation analysis. A classic example is the \emph{Anscombe Quartet},
+where several datasets share nearly identical summary statistics and
+correlation coefficients while displaying very different patterns when
+visualized.
+
+For this reason, correlation analysis should always be complemented by
+exploratory visualisations and domain knowledge.
+
+\subsection{Initial Observations}\label{initial-observations}
+
+The dataset contains both numerical and categorical variables. Initial
+inspection suggests that some data cleaning will be necessary due to
+missing values and potential inconsistencies. Further exploratory
+analysis is required to better understand the structure and quality of
+the data.
+
+\section{3. Data Preparation}\label{data-preparation}
+
+The exploratory analysis revealed several data quality issues that may
+affect the performance of predictive models. Therefore, a data cleaning
+process was performed to improve consistency, reduce noise, and prepare
+the dataset for further analysis and modelling.
+
+\subsection{Missing Values}\label{missing-values-1}
+
+Missing values were identified in several variables. The notes column
+contained mostly missing observations and limited analytical value;
+therefore, it was removed from further analysis. Remaining missing
+values will be handled using appropriate preprocessing techniques during
+model development.
+
+Removing \texttt{notes}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{notes)}
+\end{Highlighting}
+\end{Shaded}
+
+Drop na in \texttt{species}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{drop\_na}\NormalTok{(species)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Duplicates}\label{duplicates-1}
+
+Duplicate observations were identified and removed to prevent potential
+bias during model training and evaluation.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{distinct}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Data Cleaning}\label{data-cleaning}
+
+\subsubsection{Outliers}\label{outliers-2}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        id          species             island          bill_length_mm  
+##  Min.   :  1.0   Length:515         Length:515         Min.   :  0.50  
+##  1st Qu.:129.5   Class :character   Class :character   1st Qu.: 39.40  
+##  Median :258.0   Mode  :character   Mode  :character   Median : 43.80  
+##  Mean   :258.0                                         Mean   : 45.62  
+##  3rd Qu.:386.5                                         3rd Qu.: 48.20  
+##  Max.   :515.0                                         Max.   :999.00  
+##                                                        NA's   :25      
+##  bill_depth_mm   flipper_length_mm  body_mass_g        sex           
+##  Min.   :12.60   Min.   :   1.0    Min.   : -500   Length:515        
+##  1st Qu.:15.60   1st Qu.: 189.0    1st Qu.: 3547   Class :character  
+##  Median :17.60   Median : 196.0    Median : 4041   Mode  :character  
+##  Mean   :17.25   Mean   : 219.3    Mean   : 4328                     
+##  3rd Qu.:18.80   3rd Qu.: 213.0    3rd Qu.: 4852                     
+##  Max.   :21.70   Max.   :9999.0    Max.   :99000                     
+##  NA's   :21      NA's   :20        NA's   :25                        
+##       year     
+##  Min.   :1999  
+##  1st Qu.:2007  
+##  Median :2008  
+##  Mean   :2008  
+##  3rd Qu.:2009  
+##  Max.   :2099  
+## 
+\end{verbatim}
+
+Extreme values outside plausible biological ranges were identified
+during exploratory analysis. These observations were considered data
+quality issues and were removed prior to modelling.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{filter}\NormalTok{(}
+\NormalTok{    bill\_length\_mm }\SpecialCharTok{\textless{}} \DecValTok{100}\NormalTok{,}
+\NormalTok{    flipper\_length\_mm }\SpecialCharTok{\textless{}} \DecValTok{400}\NormalTok{,}
+\NormalTok{    body\_mass\_g }\SpecialCharTok{\textless{}} \DecValTok{10000}\NormalTok{,}
+\NormalTok{    year }\SpecialCharTok{\textless{}} \DecValTok{2100}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Transformations}\label{transformations}
+
+\subsubsection{Standardizing Categorical
+Variables}\label{standardizing-categorical-variables}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{species =} \FunctionTok{str\_to\_title}\NormalTok{(species),}
+    \AttributeTok{island =} \FunctionTok{str\_to\_title}\NormalTok{(island),}
+    \AttributeTok{sex =} \FunctionTok{str\_to\_lower}\NormalTok{(sex)}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+And
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{species =} \FunctionTok{recode}\NormalTok{(}
+\NormalTok{      species,}
+      \StringTok{"Gent00"} \OtherTok{=} \StringTok{"Gentoo"}
+\NormalTok{    ),}
+    \AttributeTok{sex =} \FunctionTok{recode}\NormalTok{(}
+\NormalTok{      sex,}
+      \StringTok{"m"} \OtherTok{=} \StringTok{"male"}\NormalTok{,}
+      \StringTok{"f"} \OtherTok{=} \StringTok{"female"}
+\NormalTok{    )}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+Several categorical variables contained inconsistent labels resulting
+from differences in spelling, capitalisation, and data entry errors.
+Categories were standardised to ensure consistent representation across
+the dataset.
+
+\subsection{Feature Selection /
+Engineering}\label{feature-selection-engineering}
+
+Several modifications were applied during the data preparation stage.
+
+The \texttt{notes} variable was removed because it contained a large
+proportion of missing values and provided limited analytical value.
+Duplicate records were removed to improve data consistency.
+
+Categorical variables were standardized to eliminate inconsistencies
+caused by differences in spelling, capitalization, and data entry
+errors. Extreme observations identified as likely data quality issues
+were removed from the dataset.
+
+No new variables were created at this stage. Feature engineering will be
+limited to preprocessing steps required for model development, such as
+encoding categorical variables and handling remaining missing values.
+
+Potential additional feature engineering techniques, such as creating
+derived variables or applying transformations, may be explored depending
+on the modelling approach and project objectives.
+
+\subsection{Check}\label{check}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{glimpse}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 443
+## Columns: 9
+## $ id                <dbl> 4, 322, 105, 309, 101, 334, 406, 58, 49, 467, 453, 4~
+## $ species           <chr> "Gentoo", "Adelie", "Gentoo", "Adelie", "Adelie", "G~
+## $ island            <chr> "Biscoe", "Torgersen", "Biscoe", "Torgersen", "Dream~
+## $ bill_length_mm    <dbl> 46.8, 35.9, 48.6, 37.9, 41.9, 46.1, 41.8, 35.9, 44.3~
+## $ bill_depth_mm     <dbl> 15.4, 19.0, 14.7, 19.8, 18.9, 14.6, 17.9, 17.5, 16.2~
+## $ flipper_length_mm <dbl> 217, 201, 217, 198, 194, 208, 192, 193, 206, 192, 17~
+## $ body_mass_g       <dbl> 4706, 2886, 4644, 3514, 3080, 4874, 4222, 4254, 4764~
+## $ sex               <chr> NA, "male", "female", "male", "male", "male", "male"~
+## $ year              <dbl> 2009, 2007, 2009, 2007, 2007, 2007, 2008, 2009, 2009~
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        id          species             island          bill_length_mm 
+##  Min.   :  2.0   Length:443         Length:443         Min.   :31.20  
+##  1st Qu.:132.5   Class :character   Class :character   1st Qu.:39.50  
+##  Median :258.0   Mode  :character   Mode  :character   Median :43.60  
+##  Mean   :259.5                                         Mean   :43.69  
+##  3rd Qu.:386.5                                         3rd Qu.:48.10  
+##  Max.   :514.0                                         Max.   :58.30  
+##                                                                       
+##  bill_depth_mm   flipper_length_mm  body_mass_g       sex           
+##  Min.   :12.60   Min.   :  1.0     Min.   :-500   Length:443        
+##  1st Qu.:15.70   1st Qu.:189.0     1st Qu.:3563   Class :character  
+##  Median :17.60   Median :196.0     Median :4042   Mode  :character  
+##  Mean   :17.25   Mean   :199.6     Mean   :4130                     
+##  3rd Qu.:18.70   3rd Qu.:213.0     3rd Qu.:4822                     
+##  Max.   :21.70   Max.   :232.0     Max.   :6843                     
+##  NA's   :20                                                         
+##       year     
+##  Min.   :2007  
+##  1st Qu.:2007  
+##  Median :2008  
+##  Mean   :2008  
+##  3rd Qu.:2009  
+##  Max.   :2099  
+## 
+\end{verbatim}
+
+Category labels were standardized; however, some missing values remained
+in the sex variable. These observations were retained at this stage and
+will be handled during the modelling phase using an appropriate
+preprocessing strategy.
+
+\subsubsection{Missing Values}\label{missing-values-2}
+
+Missing values were examined to assess the completeness of the dataset
+and identify variables requiring additional preprocessing.
+
+\begin{longtable}[]{@{}llrr@{}}
+\caption{Missing values by variable.}\tabularnewline
+\toprule\noalign{}
+& Variable & Missing\_Values & Missing\_Percent \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+& Variable & Missing\_Values & Missing\_Percent \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+sex & sex & 36 & 8.13 \\
+bill\_depth\_mm & bill\_depth\_mm & 20 & 4.51 \\
+id & id & 0 & 0.00 \\
+species & species & 0 & 0.00 \\
+island & island & 0 & 0.00 \\
+bill\_length\_mm & bill\_length\_mm & 0 & 0.00 \\
+flipper\_length\_mm & flipper\_length\_mm & 0 & 0.00 \\
+body\_mass\_g & body\_mass\_g & 0 & 0.00 \\
+year & year & 0 & 0.00 \\
+\end{longtable}
+
+The dataset still contains missing values in two variables. The impact
+of missing values will be assessed during the data preparation before
+modeling phase, where appropriate handling strategies will be applied.
+
+\pandocbounded{\includegraphics[keepaspectratio]{example-report_files/figures/missing-values2-plot-1.pdf}}
+
+\subsubsection{Duplicates}\label{duplicates-2}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(}\FunctionTok{duplicated}\NormalTok{(data))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0
+\end{verbatim}
+
+\subsubsection{Outliers}\label{outliers-3}
+
+\pandocbounded{\includegraphics[keepaspectratio]{example-report_files/figures/outliers-boxplots-1.pdf}}
+
+\section{4. Exploratory Data Analysis
+(EDA)}\label{exploratory-data-analysis-eda}
+
+\subsection{Distribution Analysis}\label{distribution-analysis}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{pivot\_longer}\NormalTok{(}\FunctionTok{everything}\NormalTok{()) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(value)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{bins =} \DecValTok{20}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{name, }\AttributeTok{scales =} \StringTok{"free"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{example-report_files/figures/unnamed-chunk-21-1.pdf}}
+
+\subsubsection{Interpretation}\label{interpretation}
+
+\begin{quote}
+The distributions provide an overview of the numerical variables and
+their ranges. Several variables exhibit unusual observations that may
+require further investigation. Understanding these distributions is
+important for selecting appropriate preprocessing and modelling
+techniques.
+\end{quote}
+
+\subsection{Relationship Analysis}\label{relationship-analysis}
+
+\textbf{Introduction}
+
+\begin{quote}
+Relationships between numerical variables were explored using a
+scatterplot matrix. This visualization provides an overview of pairwise
+interactions and may reveal patterns worth investigating in later stages
+of the analysis.
+\end{quote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(GGally)}
+
+\NormalTok{data }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{ggpairs}\NormalTok{(}\AttributeTok{progress =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{example-report_files/figures/unnamed-chunk-22-1.pdf}}
+
+\subsubsection{Interpretation}\label{interpretation-1}
+
+\begin{quote}
+The scatterplot matrix provides an initial overview of potential
+relationships among variables. Several patterns can be observed and may
+warrant further investigation during subsequent exploratory analysis and
+feature selection stages.
+\end{quote}
+
+\subsection{Correlation Analysis}\label{correlation-analysis-1}
+
+\textbf{Introduction}
+
+\begin{quote}
+Correlation analysis was performed to quantify linear relationships
+between numerical variables. Understanding these relationships can
+support feature selection and provide additional insight into the
+structure of the dataset.
+\end{quote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(corrplot)}
+
+\NormalTok{cor\_matrix }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{cor}\NormalTok{(}\AttributeTok{use =} \StringTok{"pairwise.complete.obs"}\NormalTok{)}
+
+\FunctionTok{corrplot}\NormalTok{(}
+\NormalTok{  cor\_matrix,}
+  \AttributeTok{method =} \StringTok{"color"}\NormalTok{,}
+  \AttributeTok{type =} \StringTok{"upper"}\NormalTok{,}
+  \AttributeTok{addCoef.col =} \StringTok{"black"}\NormalTok{,}
+  \AttributeTok{tl.col =} \StringTok{"black"}\NormalTok{,}
+  \AttributeTok{tl.srt =} \DecValTok{45}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{example-report_files/figures/unnamed-chunk-23-1.pdf}}
+
+\subsubsection{Interpretation}\label{interpretation-2}
+
+\begin{quote}
+The results indicate varying levels of correlation among the numerical
+variables. While some relationships appear stronger than others, the
+practical significance of these associations should be evaluated within
+the context of the modelling task. Correlation analysis serves as a
+useful exploratory tool but should not be used as the sole criterion for
+feature selection.
+\end{quote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{\textless{}}\KeywordTok{div}\OtherTok{ style}\OperatorTok{=}\StringTok{"}
+\StringTok{background{-}color:\#e8f1f8;}
+\StringTok{border{-}left:8px solid \#5c7fa3;}
+\StringTok{color:\#111111;}
+\StringTok{padding:12px 16px;}
+\StringTok{margin:12px 0;}
+\StringTok{"}\DataTypeTok{\textgreater{}}
+
+\NormalTok{💡 **Correlation does not imply dependence**}
+
+\NormalTok{Correlation measures only linear relationships between variables. Variables with low correlation may still be related through non{-}linear patterns. The *Anscombe Quartet* is a well{-}known example demonstrating why visual inspection should accompany statistical summaries.}
+
+\DataTypeTok{\textless{}/}\KeywordTok{div}\DataTypeTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Outlier Analysis}\label{outlier-analysis}
+
+\textbf{Introduction}
+
+\begin{quote}
+Outlier analysis was performed to identify observations that differ
+substantially from the majority of the data. Such observations may
+represent valid extreme cases or potential data quality issues.
+\end{quote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{pivot\_longer}\NormalTok{(}\FunctionTok{everything}\NormalTok{()) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =}\NormalTok{ value, }\AttributeTok{x =}\NormalTok{ name)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{coord\_flip}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{example-report_files/figures/unnamed-chunk-24-1.pdf}}
+
+\subsubsection{Interpretation}\label{interpretation-3}
+
+\begin{quote}
+Several observations fall outside the typical range of values observed
+in the dataset. These observations should be reviewed carefully, as they
+may influence statistical summaries and predictive model performance.
+\end{quote}
+
+\subsection{Exploring Body Mass
+Differences}\label{exploring-body-mass-differences}
+
+Exploratory data analysis is not limited to relationships between
+numerical variables. Relationships between categorical and numerical
+variables can also provide valuable insights. The following example
+examines differences in body mass across sex categories.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(sex)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{ggplot}\NormalTok{(}
+    \FunctionTok{aes}\NormalTok{(}
+      \AttributeTok{x =}\NormalTok{ sex,}
+      \AttributeTok{y =}\NormalTok{ body\_mass\_g,}
+      \AttributeTok{fill =}\NormalTok{ sex}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{geom\_violin}\NormalTok{(}\AttributeTok{trim =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{(}
+    \AttributeTok{width =} \FloatTok{0.15}\NormalTok{,}
+    \AttributeTok{fill =} \StringTok{"white"}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{example-report_files/figures/unnamed-chunk-25-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(sex)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{group\_by}\NormalTok{(sex) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{Mean\_Body\_Mass =} \FunctionTok{mean}\NormalTok{(}
+\NormalTok{      body\_mass\_g,}
+      \AttributeTok{na.rm =} \ConstantTok{TRUE}
+\NormalTok{    ),}
+    \AttributeTok{SD =} \FunctionTok{sd}\NormalTok{(}
+\NormalTok{      body\_mass\_g,}
+      \AttributeTok{na.rm =} \ConstantTok{TRUE}
+\NormalTok{    )}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 3
+##   sex    Mean_Body_Mass    SD
+##   <chr>           <dbl> <dbl>
+## 1 female          4083. 1089.
+## 2 male            4142.  891.
+\end{verbatim}
+
+Exploratory analysis suggests that body mass differs between male and
+female penguins. Although the distributions overlap, male penguins tend
+to have higher body mass on average. This observation indicates that sex
+may provide useful information for predictive modelling.
+
+\subsection{Summary of EDA}\label{summary-of-eda}
+
+\begin{quote}
+The exploratory analysis provided a better understanding of the dataset
+structure and quality. Several data quality issues were identified,
+including missing values, inconsistent category labels, duplicate
+records, and unusual observations. The analysis also revealed potential
+relationships between variables that may be useful for predictive
+modelling. These findings support the data preparation decisions
+described in the previous section and provide a foundation for model
+development.
+\end{quote}
+
+\section{5. Modeling}\label{modeling}
+
+\subsection{Data Preparation Strategy}\label{data-preparation-strategy}
+
+The exploratory analysis revealed several data quality issues, including
+missing values, duplicate records, inconsistent categorical labels, and
+extreme observations. Appropriate preprocessing steps were therefore
+applied to improve data consistency and prepare the dataset for machine
+learning models.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(tidymodels)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Selected Features}\label{selected-features}
+
+The target variable for this project is \texttt{species}.
+
+The following variables were retained as potential predictors:
+
+\begin{itemize}
+\tightlist
+\item
+  bill\_length\_mm
+\item
+  bill\_depth\_mm
+\item
+  flipper\_length\_mm
+\item
+  body\_mass\_g
+\item
+  island
+\item
+  sex
+\item
+  year
+\end{itemize}
+
+The \texttt{notes} variable was excluded from further analysis due to
+its large number of missing values and limited analytical relevance.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model\_data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(}
+\NormalTok{    species,}
+\NormalTok{    bill\_length\_mm,}
+\NormalTok{    bill\_depth\_mm,}
+\NormalTok{    flipper\_length\_mm,}
+\NormalTok{    body\_mass\_g,}
+\NormalTok{    island,}
+\NormalTok{    sex,}
+\NormalTok{    year}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Data Cleaning}\label{data-cleaning-1}
+
+Duplicate observations were removed and categorical variables were
+standardized to ensure consistent representation across the dataset.
+Obvious data quality issues and implausible observations identified
+during exploratory analysis were addressed prior to modelling.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model\_data }\OtherTok{\textless{}{-}}\NormalTok{ model\_data }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{distinct}\NormalTok{() }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{species =} \FunctionTok{str\_to\_title}\NormalTok{(species),}
+    \AttributeTok{island =} \FunctionTok{str\_to\_title}\NormalTok{(island),}
+    \AttributeTok{sex =} \FunctionTok{str\_to\_lower}\NormalTok{(sex),}
+    \AttributeTok{sex =} \FunctionTok{recode}\NormalTok{(}
+\NormalTok{      sex,}
+      \StringTok{"m"} \OtherTok{=} \StringTok{"male"}\NormalTok{,}
+      \StringTok{"f"} \OtherTok{=} \StringTok{"female"}
+\NormalTok{    ),}
+    \AttributeTok{species =} \FunctionTok{recode}\NormalTok{(}
+\NormalTok{      species,}
+      \StringTok{"Gent00"} \OtherTok{=} \StringTok{"Gentoo"}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{filter}\NormalTok{(}
+\NormalTok{    bill\_length\_mm }\SpecialCharTok{\textless{}} \DecValTok{100} \SpecialCharTok{|} \FunctionTok{is.na}\NormalTok{(bill\_length\_mm),}
+\NormalTok{    flipper\_length\_mm }\SpecialCharTok{\textless{}} \DecValTok{400} \SpecialCharTok{|} \FunctionTok{is.na}\NormalTok{(flipper\_length\_mm),}
+\NormalTok{    body\_mass\_g }\SpecialCharTok{\textless{}} \DecValTok{10000} \SpecialCharTok{|} \FunctionTok{is.na}\NormalTok{(body\_mass\_g),}
+\NormalTok{    year }\SpecialCharTok{\textless{}} \DecValTok{2100} \SpecialCharTok{|} \FunctionTok{is.na}\NormalTok{(year)}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Handling Missing Values}\label{handling-missing-values}
+
+Missing values remained in selected variables after the cleaning
+process. These observations were retained and handled through
+model-specific preprocessing techniques during model training.
+
+Three possible strategies may be considered for the \texttt{sex}
+variable:
+
+\begin{itemize}
+\tightlist
+\item
+  removing observations with missing values,
+\item
+  replacing missing values with a new category,
+\item
+  imputing missing values during model training.
+\end{itemize}
+
+In this report, the third approach is preferred because it keeps more
+observations in the dataset and allows preprocessing to be included
+directly in the modelling workflow.
+
+\subsubsection{\texorpdfstring{Option 1: Removing Records with Missing
+\texttt{sex}}{Option 1: Removing Records with Missing sex}}\label{option-1-removing-records-with-missing-sex}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model\_data\_option\_1 }\OtherTok{\textless{}{-}}\NormalTok{ model\_data }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{drop\_na}\NormalTok{(sex)}
+\end{Highlighting}
+\end{Shaded}
+
+This approach is simple, but it reduces the size of the dataset. It may
+be acceptable when the number of missing observations is small, but it
+can also remove potentially useful information.
+
+\subsubsection{\texorpdfstring{Option 2: Creating an \texttt{unknown}
+Category}{Option 2: Creating an unknown Category}}\label{option-2-creating-an-unknown-category}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model\_data\_option\_2 }\OtherTok{\textless{}{-}}\NormalTok{ model\_data }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{sex =} \FunctionTok{replace\_na}\NormalTok{(sex, }\StringTok{"unknown"}\NormalTok{)}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+This approach preserves observations and treats missing values as a
+separate category. It may be useful when missingness itself could carry
+information, but it also introduces an additional artificial category.
+
+\subsubsection{Option 3: Imputation During Model
+Training}\label{option-3-imputation-during-model-training}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model\_data\_option\_3 }\OtherTok{\textless{}{-}}\NormalTok{ model\_data}
+\end{Highlighting}
+\end{Shaded}
+
+In this approach, missing values are not manually replaced at this
+stage. They are handled inside the modelling recipe.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidymodels)}
+\NormalTok{model\_recipe }\OtherTok{\textless{}{-}} \FunctionTok{recipe}\NormalTok{(species }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ model\_data\_option\_3) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{step\_impute\_mode}\NormalTok{(sex) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{step\_impute\_median}\NormalTok{(}\FunctionTok{all\_numeric\_predictors}\NormalTok{()) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{step\_dummy}\NormalTok{(}\FunctionTok{all\_nominal\_predictors}\NormalTok{()) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{step\_normalize}\NormalTok{(}\FunctionTok{all\_numeric\_predictors}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+This strategy keeps preprocessing consistent between training and
+testing data and reduces the risk of data leakage.
+
+\subsection{Encoding and Scaling}\label{encoding-and-scaling}
+
+The dataset contains both numerical and categorical variables.
+Appropriate preprocessing techniques, including categorical encoding and
+numerical scaling where required, were included in the modelling
+workflow.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model\_recipe }\OtherTok{\textless{}{-}} \FunctionTok{recipe}\NormalTok{(species }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ model\_data\_option\_3) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{step\_impute\_mode}\NormalTok{(}\FunctionTok{all\_nominal\_predictors}\NormalTok{()) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{step\_impute\_median}\NormalTok{(}\FunctionTok{all\_numeric\_predictors}\NormalTok{()) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{step\_dummy}\NormalTok{(}\FunctionTok{all\_nominal\_predictors}\NormalTok{()) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{step\_normalize}\NormalTok{(}\FunctionTok{all\_numeric\_predictors}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+Categorical variables were encoded into numerical form using dummy
+variables. Numerical variables were normalized to make them comparable
+in scale, which is especially important for models sensitive to variable
+magnitude.
+
+\subsection{Training and Testing Sets}\label{training-and-testing-sets}
+
+To evaluate model performance objectively, the dataset was divided into
+separate training and testing subsets. The training set was used for
+model development, while the testing set was reserved for final
+performance evaluation.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+
+\NormalTok{data\_split }\OtherTok{\textless{}{-}} \FunctionTok{initial\_split}\NormalTok{(}
+\NormalTok{  model\_data\_option\_3,}
+  \AttributeTok{prop =} \FloatTok{0.8}\NormalTok{,}
+  \AttributeTok{strata =}\NormalTok{ species}
+\NormalTok{)}
+
+\NormalTok{train\_data }\OtherTok{\textless{}{-}} \FunctionTok{training}\NormalTok{(data\_split)}
+\NormalTok{test\_data  }\OtherTok{\textless{}{-}} \FunctionTok{testing}\NormalTok{(data\_split)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model\_recipe }\OtherTok{\textless{}{-}} \FunctionTok{recipe}\NormalTok{(species }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ train\_data) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{step\_impute\_mode}\NormalTok{(}\FunctionTok{all\_nominal\_predictors}\NormalTok{()) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{step\_impute\_median}\NormalTok{(}\FunctionTok{all\_numeric\_predictors}\NormalTok{()) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{step\_dummy}\NormalTok{(}\FunctionTok{all\_nominal\_predictors}\NormalTok{()) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{step\_normalize}\NormalTok{(}\FunctionTok{all\_numeric\_predictors}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+The split was stratified by the target variable to preserve the
+distribution of penguin species in both subsets.
+
+\subsection{Prepared Data for Model 1}\label{prepared-data-for-model-1}
+
+The prepared recipe can now be used as part of the modelling workflow.
+This ensures that all preprocessing steps are applied consistently
+during model training and evaluation.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model\_1\_spec }\OtherTok{\textless{}{-}} \FunctionTok{decision\_tree}\NormalTok{() }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{set\_engine}\NormalTok{(}\StringTok{"rpart"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{set\_mode}\NormalTok{(}\StringTok{"classification"}\NormalTok{)}
+
+\NormalTok{model\_1\_workflow }\OtherTok{\textless{}{-}} \FunctionTok{workflow}\NormalTok{() }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{add\_recipe}\NormalTok{(model\_recipe) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{add\_model}\NormalTok{(model\_1\_spec)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Summary}\label{summary}
+
+The dataset was cleaned and prepared for predictive modelling. The
+resulting data contains consistent variable definitions and provides a
+suitable basis for building and evaluating classification models.
+
+The final preparation workflow includes:
+
+\begin{itemize}
+\tightlist
+\item
+  removal of non-informative variables,
+\item
+  standardization of categorical labels,
+\item
+  treatment of implausible values,
+\item
+  imputation of remaining missing values,
+\item
+  encoding of categorical predictors,
+\item
+  normalization of numerical predictors,
+\item
+  division into training and testing subsets.
+\end{itemize}
+
+These steps provide a structured and reproducible foundation for the
+modelling stage.
+
+\subsection{Check \#2: Data Validation}\label{check-2-data-validation}
+
+After the initial cleaning step, the dataset was checked again to verify
+whether implausible values had been removed successfully. This
+validation revealed that some unrealistic observations were still
+present and required additional filtering.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(model\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    species          bill_length_mm  bill_depth_mm   flipper_length_mm
+##  Length:429         Min.   :31.20   Min.   :12.60   Min.   :  1.0    
+##  Class :character   1st Qu.:39.50   1st Qu.:15.70   1st Qu.:189.0    
+##  Mode  :character   Median :43.60   Median :17.70   Median :196.0    
+##                     Mean   :43.71   Mean   :17.27   Mean   :199.5    
+##                     3rd Qu.:48.10   3rd Qu.:18.70   3rd Qu.:213.0    
+##                     Max.   :58.30   Max.   :21.70   Max.   :232.0    
+##                                     NA's   :19                       
+##   body_mass_g      island              sex                 year     
+##  Min.   :-500   Length:429         Length:429         Min.   :2007  
+##  1st Qu.:3562   Class :character   Class :character   1st Qu.:2007  
+##  Median :4039   Mode  :character   Mode  :character   Median :2008  
+##  Mean   :4118                                         Mean   :2008  
+##  3rd Qu.:4795                                         3rd Qu.:2009  
+##  Max.   :6843                                         Max.   :2099  
+## 
+\end{verbatim}
+
+There are still strange data: - Min body\_mass\_g = -500 - Min
+flipper\_length\_mm = 1 - Max year = 2099 So:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model\_data }\OtherTok{\textless{}{-}}\NormalTok{ model\_data }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{filter}\NormalTok{(}
+    \FunctionTok{between}\NormalTok{(bill\_length\_mm, }\DecValTok{20}\NormalTok{, }\DecValTok{70}\NormalTok{) }\SpecialCharTok{|} \FunctionTok{is.na}\NormalTok{(bill\_length\_mm),}
+    \FunctionTok{between}\NormalTok{(flipper\_length\_mm, }\DecValTok{150}\NormalTok{, }\DecValTok{250}\NormalTok{) }\SpecialCharTok{|} \FunctionTok{is.na}\NormalTok{(flipper\_length\_mm),}
+    \FunctionTok{between}\NormalTok{(body\_mass\_g, }\DecValTok{2000}\NormalTok{, }\DecValTok{8000}\NormalTok{) }\SpecialCharTok{|} \FunctionTok{is.na}\NormalTok{(body\_mass\_g),}
+    \FunctionTok{between}\NormalTok{(year, }\DecValTok{2007}\NormalTok{, }\DecValTok{2009}\NormalTok{) }\SpecialCharTok{|} \FunctionTok{is.na}\NormalTok{(year)}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(model\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    species          bill_length_mm  bill_depth_mm   flipper_length_mm
+##  Length:419         Min.   :31.20   Min.   :12.60   Min.   :172.0    
+##  Class :character   1st Qu.:39.45   1st Qu.:15.60   1st Qu.:189.0    
+##  Mode  :character   Median :43.50   Median :17.70   Median :196.0    
+##                     Mean   :43.67   Mean   :17.27   Mean   :199.8    
+##                     3rd Qu.:48.10   3rd Qu.:18.80   3rd Qu.:213.0    
+##                     Max.   :58.30   Max.   :21.70   Max.   :232.0    
+##                                     NA's   :19                       
+##   body_mass_g      island              sex                 year     
+##  Min.   :2399   Length:419         Length:419         Min.   :2007  
+##  1st Qu.:3596   Class :character   Class :character   1st Qu.:2007  
+##  Median :4061   Mode  :character   Mode  :character   Median :2008  
+##  Mean   :4187                                         Mean   :2008  
+##  3rd Qu.:4811                                         3rd Qu.:2009  
+##  Max.   :6843                                         Max.   :2009  
+## 
+\end{verbatim}
+
+he additional validation step confirmed that extreme values remaining
+after the first cleaning pass were removed. This illustrates that data
+preparation is an iterative process: cleaning decisions should be
+followed by checks to verify whether the dataset is actually ready for
+modelling.
+
+\subsection{Models}\label{models}
+
+Before fitting classification models, the target variable and
+categorical predictors were converted to factors. This ensures that the
+modelling workflow treats the task as classification rather than
+regression.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model\_data\_option\_3 }\OtherTok{\textless{}{-}}\NormalTok{ model\_data\_option\_3 }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{species =} \FunctionTok{as.factor}\NormalTok{(species),}
+    \AttributeTok{island =} \FunctionTok{as.factor}\NormalTok{(island),}
+    \AttributeTok{sex =} \FunctionTok{as.factor}\NormalTok{(sex)}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+
+\NormalTok{data\_split }\OtherTok{\textless{}{-}} \FunctionTok{initial\_split}\NormalTok{(}
+\NormalTok{  model\_data\_option\_3,}
+  \AttributeTok{prop =} \FloatTok{0.8}\NormalTok{,}
+  \AttributeTok{strata =}\NormalTok{ species}
+\NormalTok{)}
+
+\NormalTok{train\_data }\OtherTok{\textless{}{-}} \FunctionTok{training}\NormalTok{(data\_split)}
+\NormalTok{test\_data  }\OtherTok{\textless{}{-}} \FunctionTok{testing}\NormalTok{(data\_split)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model\_recipe }\OtherTok{\textless{}{-}} \FunctionTok{recipe}\NormalTok{(species }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ train\_data) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{step\_impute\_mode}\NormalTok{(}\FunctionTok{all\_nominal\_predictors}\NormalTok{()) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{step\_impute\_median}\NormalTok{(}\FunctionTok{all\_numeric\_predictors}\NormalTok{()) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{step\_dummy}\NormalTok{(}\FunctionTok{all\_nominal\_predictors}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{classification\_metrics }\OtherTok{\textless{}{-}} \FunctionTok{metric\_set}\NormalTok{(}
+\NormalTok{  accuracy,}
+\NormalTok{  kap}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Model 1}\label{model-1}
+
+\paragraph{Model Description}\label{model-description}
+
+A Decision Tree classifier was selected as the first model. This model
+is easy to interpret and provides a useful baseline for classification
+tasks. Decision trees split the data into smaller groups based on
+predictor variables and generate classification rules that can be
+inspected and explained.
+
+This model was selected because it is transparent, relatively simple,
+and suitable as an initial reference model for predicting penguin
+species.
+
+\paragraph{Implementation}\label{implementation}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dt\_model }\OtherTok{\textless{}{-}} \FunctionTok{decision\_tree}\NormalTok{() }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{set\_engine}\NormalTok{(}\StringTok{"rpart"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{set\_mode}\NormalTok{(}\StringTok{"classification"}\NormalTok{)}
+
+\NormalTok{dt\_workflow }\OtherTok{\textless{}{-}} \FunctionTok{workflow}\NormalTok{() }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{add\_recipe}\NormalTok{(model\_recipe) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{add\_model}\NormalTok{(dt\_model)}
+
+\NormalTok{dt\_fit }\OtherTok{\textless{}{-}} \FunctionTok{fit}\NormalTok{(}
+\NormalTok{  dt\_workflow,}
+  \AttributeTok{data =}\NormalTok{ train\_data}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Which gives:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(rpart.plot)}
+
+\NormalTok{dt\_tree }\OtherTok{\textless{}{-}} \FunctionTok{extract\_fit\_engine}\NormalTok{(dt\_fit)}
+
+\FunctionTok{rpart.plot}\NormalTok{(}
+\NormalTok{  dt\_tree,}
+  \AttributeTok{type =} \DecValTok{2}\NormalTok{,}
+  \AttributeTok{extra =} \DecValTok{104}\NormalTok{,}
+  \AttributeTok{fallen.leaves =} \ConstantTok{TRUE}\NormalTok{,}
+  \AttributeTok{main =} \StringTok{"Decision Tree for Penguin Species Classification"}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{example-report_files/figures/unnamed-chunk-45-1.pdf}}
+The decision tree visualization shows the main decision rules used by
+the model to classify penguin species. This makes the model easier to
+interpret than more complex ensemble methods. However, a single tree may
+be less stable and less accurate than models such as Random Forest.
+\#\#\#\# Results
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dt\_predictions }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(}
+\NormalTok{  dt\_fit,}
+\NormalTok{  test\_data}
+\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{bind\_cols}\NormalTok{(test\_data)}
+
+\NormalTok{dt\_metrics }\OtherTok{\textless{}{-}}\NormalTok{ dt\_predictions }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{classification\_metrics}\NormalTok{(}
+    \AttributeTok{truth =}\NormalTok{ species,}
+    \AttributeTok{estimate =}\NormalTok{ .pred\_class}
+\NormalTok{  )}
+
+\NormalTok{dt\_metrics}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 3
+##   .metric  .estimator .estimate
+##   <chr>    <chr>          <dbl>
+## 1 accuracy multiclass     0.966
+## 2 kap      multiclass     0.946
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dt\_conf\_mat }\OtherTok{\textless{}{-}}\NormalTok{ dt\_predictions }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{conf\_mat}\NormalTok{(}
+    \AttributeTok{truth =}\NormalTok{ species,}
+    \AttributeTok{estimate =}\NormalTok{ .pred\_class}
+\NormalTok{  )}
+
+\NormalTok{dt\_conf\_mat}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            Truth
+## Prediction  Adelie Chinstrap Gentoo
+##   Adelie        37         0      0
+##   Chinstrap      3        17      0
+##   Gentoo         0         0     30
+\end{verbatim}
+
+\paragraph{Interpretation}\label{interpretation-4}
+
+The Decision Tree model provides a baseline classification result. Its
+performance metrics show how well a relatively simple and interpretable
+model can distinguish between penguin species using the selected
+predictor variables.
+
+The confusion matrix can be used to identify which species are
+classified correctly and where misclassifications occur.
+
+\subsubsection{Model 2}\label{model-2}
+
+\paragraph{Model Description}\label{model-description-1}
+
+A Random Forest classifier was selected as the second model. Random
+Forest extends the idea of a single decision tree by combining multiple
+trees into an ensemble model. This approach often improves predictive
+performance and reduces the risk of overfitting.
+
+This model was selected because it is robust, works well with mixed
+predictor variables, and often provides strong performance in
+classification problems.
+
+\paragraph{Implementation}\label{implementation-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ranger)}
+\NormalTok{rf\_model }\OtherTok{\textless{}{-}} \FunctionTok{rand\_forest}\NormalTok{(}
+  \AttributeTok{trees =} \DecValTok{500}
+\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{set\_engine}\NormalTok{(}\StringTok{"ranger"}\NormalTok{, }\AttributeTok{importance =} \StringTok{"impurity"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{set\_mode}\NormalTok{(}\StringTok{"classification"}\NormalTok{)}
+
+\NormalTok{rf\_workflow }\OtherTok{\textless{}{-}} \FunctionTok{workflow}\NormalTok{() }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{add\_recipe}\NormalTok{(model\_recipe) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{add\_model}\NormalTok{(rf\_model)}
+
+\NormalTok{rf\_fit }\OtherTok{\textless{}{-}} \FunctionTok{fit}\NormalTok{(}
+\NormalTok{  rf\_workflow,}
+  \AttributeTok{data =}\NormalTok{ train\_data}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Checking variable importance:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(vip)}
+
+\FunctionTok{vip}\NormalTok{(}
+  \FunctionTok{extract\_fit\_parsnip}\NormalTok{(rf\_fit)}\SpecialCharTok{$}\NormalTok{fit,}
+  \AttributeTok{num\_features =} \DecValTok{10}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{example-report_files/figures/unnamed-chunk-49-1.pdf}}
+Variable importance indicates which predictors contributed most to the
+classification process. The plot helps identify variables that are most
+influential when distinguishing between penguin species.
+
+With \texttt{ggplot} we can confirm:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rf\_engine }\OtherTok{\textless{}{-}} \FunctionTok{extract\_fit\_engine}\NormalTok{(rf\_fit)}
+
+\NormalTok{importance\_df }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}
+  \AttributeTok{Variable =} \FunctionTok{names}\NormalTok{(rf\_engine}\SpecialCharTok{$}\NormalTok{variable.importance),}
+  \AttributeTok{Importance =}\NormalTok{ rf\_engine}\SpecialCharTok{$}\NormalTok{variable.importance}
+\NormalTok{)}
+
+\NormalTok{importance\_df }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(Importance)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}
+    \AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(Variable, Importance),}
+    \AttributeTok{y =}\NormalTok{ Importance}
+\NormalTok{  )) }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{title =} \StringTok{"Random Forest Variable Importance"}\NormalTok{,}
+    \AttributeTok{x =} \StringTok{""}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Importance"}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{example-report_files/figures/unnamed-chunk-50-1.pdf}}
+
+\paragraph{Results}\label{results}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rf\_predictions }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(}
+\NormalTok{  rf\_fit,}
+\NormalTok{  test\_data}
+\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{bind\_cols}\NormalTok{(test\_data)}
+
+\NormalTok{rf\_metrics }\OtherTok{\textless{}{-}}\NormalTok{ rf\_predictions }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{classification\_metrics}\NormalTok{(}
+    \AttributeTok{truth =}\NormalTok{ species,}
+    \AttributeTok{estimate =}\NormalTok{ .pred\_class}
+\NormalTok{  )}
+
+\NormalTok{rf\_metrics}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 3
+##   .metric  .estimator .estimate
+##   <chr>    <chr>          <dbl>
+## 1 accuracy multiclass     0.977
+## 2 kap      multiclass     0.964
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rf\_conf\_mat }\OtherTok{\textless{}{-}}\NormalTok{ rf\_predictions }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{conf\_mat}\NormalTok{(}
+    \AttributeTok{truth =}\NormalTok{ species,}
+    \AttributeTok{estimate =}\NormalTok{ .pred\_class}
+\NormalTok{  )}
+
+\NormalTok{rf\_conf\_mat}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            Truth
+## Prediction  Adelie Chinstrap Gentoo
+##   Adelie        38         0      0
+##   Chinstrap      2        17      0
+##   Gentoo         0         0     30
+\end{verbatim}
+
+\paragraph{Interpretation}\label{interpretation-5}
+
+The Random Forest model was evaluated using the testing dataset. The
+obtained metrics indicate how effectively the model predicts penguin
+species based on the selected variables.
+
+The results can be compared with the Decision Tree model to assess
+whether the ensemble approach improves predictive performance.
+
+\subsection{Model Comparison}\label{model-comparison}
+
+\subsubsection{Results}\label{results-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model\_comparison }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(}
+\NormalTok{  dt\_metrics }\SpecialCharTok{|\textgreater{}} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{model =} \StringTok{"Decision Tree"}\NormalTok{),}
+\NormalTok{  rf\_metrics }\SpecialCharTok{|\textgreater{}} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{model =} \StringTok{"Random Forest"}\NormalTok{)}
+\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(model, .metric, .estimate)}
+
+\NormalTok{model\_comparison}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 4 x 3
+##   model         .metric  .estimate
+##   <chr>         <chr>        <dbl>
+## 1 Decision Tree accuracy     0.966
+## 2 Decision Tree kap          0.946
+## 3 Random Forest accuracy     0.977
+## 4 Random Forest kap          0.964
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model\_comparison }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ model, }\AttributeTok{y =}\NormalTok{ .estimate, }\AttributeTok{fill =}\NormalTok{ .metric)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{position =} \StringTok{"dodge"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{title =} \StringTok{"Model comparison"}\NormalTok{,}
+    \AttributeTok{x =} \StringTok{"Model"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Metric value"}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{example-report_files/figures/unnamed-chunk-54-1.pdf}}
+
+\subsubsection{Interpretation}\label{interpretation-6}
+
+Both models were evaluated using the same testing dataset. The
+comparison allows assessment of whether the more complex Random Forest
+model provides better predictive performance than the simpler Decision
+Tree model.
+
+The final model selection should consider both predictive performance
+and interpretability.
+
+\subsection{Discussion}\label{discussion}
+
+Two classification models were developed and evaluated: a Decision Tree
+and a Random Forest.
+
+The Decision Tree model offers a high level of interpretability. The
+resulting tree structure can be visualized and easily understood, making
+it useful for explaining classification decisions. However, a single
+tree may be sensitive to variations in the training data and can be
+prone to overfitting.
+
+The Random Forest model addresses some of these limitations by combining
+multiple decision trees into an ensemble. This approach generally
+improves predictive performance and robustness while reducing the impact
+of individual tree errors. The trade-off is reduced interpretability, as
+the model's decision-making process becomes more complex.
+
+Overall, both models demonstrate how machine learning techniques can be
+applied to classification problems. The comparison highlights the common
+trade-off between model interpretability and predictive performance.
+
+\subsection{Limitations}\label{limitations}
+
+Several limitations should be considered when interpreting the results.
+
+First, the dataset required extensive cleaning due to missing values,
+inconsistent categorical labels, duplicate records, and implausible
+observations. The quality of the final models therefore depends on the
+assumptions made during the data preparation stage.
+
+Second, the analysis was conducted using a single train-test split.
+Different random splits or cross-validation procedures could produce
+slightly different performance estimates.
+
+Third, the project focused on a limited number of classification
+algorithms. Other approaches, such as k-Nearest Neighbours, Support
+Vector Machines, Gradient Boosting, or Neural Networks, may yield
+different results.
+
+Finally, the dataset represents a specific collection of penguin
+observations. Consequently, conclusions should be interpreted within the
+context of this dataset and should not be generalized beyond the
+available data without additional validation.
+
+\section{7. Recommendations}\label{recommendations}
+
+Provide recommendations based on the results of the analysis.
+
+\section{8. Conclusions}\label{conclusions}
+
+The objective of this project was to develop and evaluate machine
+learning models capable of predicting penguin species based on
+morphological measurements and selected categorical attributes.
+
+The project objectives were successfully achieved. Data quality issues,
+including missing values, inconsistent category labels, duplicate
+observations, and implausible values, were identified and addressed
+during the data preparation stage. This improved the overall consistency
+and usability of the dataset.
+
+A meaningful exploratory data analysis was performed, providing insights
+into variable distributions, relationships between predictors,
+correlations, and potential outliers. These analyses supported
+subsequent data preparation and modelling decisions.
+
+Two classification models, a Decision Tree and a Random Forest, were
+developed and evaluated using the prepared dataset. Model performance
+was assessed using objective evaluation metrics and confusion matrices,
+allowing a direct comparison of the two approaches.
+
+The results demonstrate that machine learning techniques can effectively
+classify penguin species using the available predictor variables. While
+the Decision Tree offered greater interpretability, the Random Forest
+generally provided a more robust classification approach.
+
+Overall, the success criteria defined at the beginning of the project
+were met:
+
+\begin{itemize}
+\tightlist
+\item
+  data quality issues were identified and addressed;
+\item
+  meaningful exploratory analysis was performed;
+\item
+  two classification models were developed;
+\item
+  model performance was evaluated and compared;
+\item
+  conclusions were supported by analytical evidence obtained throughout
+  the CRISP-DM process.
+\end{itemize}
+
+The project illustrates the importance of systematic data preparation,
+exploratory analysis, and model evaluation when developing predictive
+solutions based on real-world data.
+
+\subsection{Summary}\label{summary-1}
+
+This project followed the CRISP-DM methodology to develop and evaluate
+machine learning models for penguin species classification.
+
+The analysis included data understanding, data cleaning, exploratory
+data analysis, feature preparation, model development, and model
+evaluation. Data quality issues were identified and addressed prior to
+modelling. Two classification algorithms, a Decision Tree and a Random
+Forest, were trained and evaluated using a dedicated testing dataset.
+
+The results demonstrate the importance of systematic data preparation
+and model evaluation when building predictive solutions based on
+real-world data.
+
+\subsection{Lessons Learned}\label{lessons-learned}
+
+Several important lessons emerged from this analysis.
+
+First, data quality has a substantial impact on the modelling process.
+Missing values, inconsistent labels, duplicate observations, and
+implausible values required attention before reliable models could be
+developed.
+
+Second, exploratory data analysis provided valuable insights into the
+structure of the dataset and helped guide data preparation decisions.
+Visualisation proved particularly useful for identifying unusual
+observations and understanding relationships between variables.
+
+Third, different machine learning models offer different advantages.
+Simpler models such as Decision Trees provide interpretability, while
+ensemble methods such as Random Forests often deliver improved
+predictive performance.
+
+Finally, model evaluation should extend beyond a single metric and
+include multiple perspectives, such as confusion matrices and
+comparative performance analysis.
+
+\subsection{Future Work}\label{future-work}
+
+Several extensions could be explored in future iterations of the
+project.
+
+Additional classification algorithms, such as Support Vector Machines,
+k-Nearest Neighbours, Gradient Boosting, or Neural Networks, could be
+evaluated and compared with the models developed in this study.
+
+More advanced feature engineering techniques could also be investigated
+to improve predictive performance. Cross-validation procedures could
+provide more robust estimates of model generalisation performance.
+
+Finally, the analysis could be extended by incorporating additional
+biological or environmental variables, allowing more comprehensive
+modelling of penguin characteristics and species differentiation.
+
+\section{References}\label{references}
+
+List all external sources used.
+
+\section{Appendix A (Optional)}\label{appendix-a-optional}
+
+Additional tables, figures, code snippets, or supplementary material.
+
+\section{Appendix B -Explanatory Data Analysis
+Report}\label{appendix-b--explanatory-data-analysis-report}
+
+💡 Accessibility and Visual Design
+
+The visualisations in this report were designed with readability and
+accessibility in mind. Colour palettes and formatting choices were
+selected to ensure that charts remain interpretable for a wide audience,
+including individuals with common forms of colour vision deficiency.
+
+In addition to colour, visual distinctions such as point shapes, labels,
+and layout were used to improve clarity. These design choices help
+ensure that the presented insights remain understandable when viewed on
+different screens, projectors, or printed materials.
+
+Effective data communication depends not only on accurate analysis but
+also on the ability to present results in a clear, accessible, and
+audience-friendly manner.
+
+\subsection{Understanding Penguin
+Characteristics}\label{understanding-penguin-characteristics}
+
+The purpose of this report is not to build predictive models, but to
+communicate selected insights discovered in the penguin dataset. While
+exploratory analysis focuses on discovering patterns, explanatory
+analysis focuses on presenting findings in a clear and meaningful way
+for an audience.
+
+The dataset contains measurements of penguins belonging to three
+species: Adelie, Chinstrap, and Gentoo. Several physical characteristics
+were recorded, including bill dimensions, flipper length, body mass,
+sex, and island of origin.
+
+\subsection{Insight 1: Penguin Species Differ in Physical
+Characteristics}\label{insight-1-penguin-species-differ-in-physical-characteristics}
+
+One of the most visible patterns in the dataset is the difference in
+body measurements between species.
+
+When comparing bill dimensions and flipper length, the three species
+form distinct groups. Gentoo penguins generally have longer flippers and
+greater body mass, while Adelie penguins tend to be smaller. Chinstrap
+penguins often occupy an intermediate position.
+
+These differences suggest that morphological measurements contain useful
+information for distinguishing between species.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}
+\NormalTok{  model\_data,}
+  \FunctionTok{aes}\NormalTok{(}
+    \AttributeTok{x =}\NormalTok{ bill\_length\_mm,}
+    \AttributeTok{y =}\NormalTok{ flipper\_length\_mm,}
+    \AttributeTok{color =}\NormalTok{ species,}
+    \AttributeTok{shape =}\NormalTok{ species}
+\NormalTok{  )}
+\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}
+    \AttributeTok{size =} \DecValTok{2}\NormalTok{,}
+    \AttributeTok{alpha =} \FloatTok{0.8}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_manual}\NormalTok{(}
+    \AttributeTok{values =} \FunctionTok{c}\NormalTok{(}
+      \StringTok{"Adelie"} \OtherTok{=} \StringTok{"\#0072B2"}\NormalTok{,}
+      \StringTok{"Chinstrap"} \OtherTok{=} \StringTok{"\#E69F00"}\NormalTok{,}
+      \StringTok{"Gentoo"} \OtherTok{=} \StringTok{"\#009E73"}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{example-report_files/figures/unnamed-chunk-55-1.pdf}}
+The three penguin species occupy different regions of the feature space.
+This suggests that morphological measurements contain sufficient
+information to distinguish species and explains why classification
+models achieve good predictive performance.
+
+\subsection{Insight 2: Species Distribution Across
+Islands}\label{insight-2-species-distribution-across-islands}
+
+Species distribution was examined across islands to explore whether
+penguin species occur uniformly throughout the study area. Understanding
+geographic distribution patterns can provide additional biological
+context and help explain why location-related variables may be useful
+for classification
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}
+\NormalTok{  data,}
+  \FunctionTok{aes}\NormalTok{(}
+    \AttributeTok{x =}\NormalTok{ island,}
+    \AttributeTok{fill =}\NormalTok{ species}
+\NormalTok{  )}
+\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}
+    \AttributeTok{position =} \StringTok{"fill"}\NormalTok{,}
+    \AttributeTok{color =} \StringTok{"white"}\NormalTok{,}
+    \AttributeTok{linewidth =} \FloatTok{0.3}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_manual}\NormalTok{(}
+    \AttributeTok{values =} \FunctionTok{c}\NormalTok{(}
+      \StringTok{"Adelie"} \OtherTok{=} \StringTok{"\#0072B2"}\NormalTok{,}
+      \StringTok{"Chinstrap"} \OtherTok{=} \StringTok{"\#E69F00"}\NormalTok{,}
+      \StringTok{"Gentoo"} \OtherTok{=} \StringTok{"\#009E73"}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}
+    \AttributeTok{labels =}\NormalTok{ scales}\SpecialCharTok{::}\NormalTok{percent}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{title =} \StringTok{"Species Composition Differs Across Islands"}\NormalTok{,}
+    \AttributeTok{subtitle =} \StringTok{"Each island exhibits a distinct species profile"}\NormalTok{,}
+    \AttributeTok{x =} \StringTok{"Island"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Percentage of Observations"}\NormalTok{,}
+    \AttributeTok{fill =} \StringTok{"Species"}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{example-report_files/figures/unnamed-chunk-56-1.pdf}}
+
+One of the clearest patterns in the dataset is that penguin species are
+not evenly distributed across islands. Certain islands are associated
+with particular species, creating distinct geographic signatures. This
+observation demonstrates that location alone can provide valuable clues
+about species identity and helps explain why the island variable
+contributes to classification performance
+
+\subsection{Insight 3: Data Quality Directly Affects Analysis
+Quality}\label{insight-3-data-quality-directly-affects-analysis-quality}
+
+The dataset contained several data quality issues, including:
+
+\begin{itemize}
+\tightlist
+\item
+  missing values,
+\item
+  duplicate observations,
+\item
+  inconsistent category labels,
+\item
+  implausible numerical values.
+\end{itemize}
+
+These problems required cleaning before reliable analysis could be
+performed.
+
+\subsubsection{Why It Matters}\label{why-it-matters}
+
+Poor data quality can distort visualisations, bias statistical
+summaries, and reduce model performance. Data preparation is therefore a
+critical step in any data mining project.
+
+\subsection{Insight 4: Visualisation Reveals Patterns Hidden in Summary
+Statistics}\label{insight-4-visualisation-reveals-patterns-hidden-in-summary-statistics}
+
+Several relationships became visible only after visual exploration of
+the data.
+
+Histograms revealed unusual observations and potential outliers.
+Scatterplots highlighted relationships between variables. Correlation
+analysis quantified some of these relationships, while boxplots
+illustrated differences between groups.
+
+\subsubsection{Why It Matters}\label{why-it-matters-1}
+
+Numerical summaries alone rarely provide a complete understanding of a
+dataset. Visualisation remains one of the most effective tools for
+communicating analytical findings.
+
+\subsection{Key Takeaways}\label{key-takeaways}
+
+The analysis demonstrates that:
+
+\begin{itemize}
+\tightlist
+\item
+  penguin species exhibit distinct physical characteristics;
+\item
+  body mass differs between male and female penguins;
+\item
+  data quality strongly influences analytical outcomes;
+\item
+  visualisation is essential for discovering and communicating insights.
+\end{itemize}
+
+\end{document}

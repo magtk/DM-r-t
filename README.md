@@ -12,11 +12,42 @@ Additional implementations and examples may be added in future releases.
 - `R/report_template.Rmd` – empty report template
 - `R/example_report.Rmd` – completed example report
 - `R/example_report.html` – rendered example report
-- `R/example_report.pdf` – rendered example report
 
 ### Data
 
 - `data/penguins_mess.csv` – sample dataset used in the examples
+
+## Requirements
+
+The report was developed in R using the following packages:
+
+```r
+library(tidyverse)
+library(GGally)
+library(corrplot)
+library(tidymodels)
+library(rpart.plot)
+library(ranger)
+library(vip)
+library(viridis)
+library(scales)
+```
+
+Install missing packages with:
+
+```r
+install.packages(c(
+  "tidyverse",
+  "GGally",
+  "corrplot",
+  "tidymodels",
+  "rpart.plot",
+  "ranger",
+  "vip",
+  "viridis",
+  "scales"
+))
+```
 
 
 
