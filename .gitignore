@@ -46,3 +46,4 @@ env/
 
 # Rendered documents (optional)
 *.utf8.md
+.positai

@@ -2932,18 +2932,70 @@ This includes examining the structure of the data, identifying variable types, e
 <p>Particular attention is given to missing values, inconsistencies, unusual observations, and the distribution of individual variables. Understanding these characteristics is essential before proceeding to data preparation and model development.</p>
 <div id="dataset-description" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Dataset Description</h2>
-<p>Provide a general description of the dataset.</p>
+<p>The dataset was imported and inspected to understand its structure, variable types, and overall characteristics.</p>
+<p>An initial review was performed to identify the number of observations, available variables, data types, and potential data quality issues that may require attention during the preparation phase.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;penguins_mess.csv&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>)</span></code></pre></div>
+<div id="basic-dataset-information" class="section level3" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> Basic Dataset Information</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">dim</span>(data)</span></code></pre></div>
+<pre><code>## [1] 515  10</code></pre>
+<p>So dataset has 515 observations and 10 variables.</p>
+<p>Summary statistics</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">summary</span>(data)</span></code></pre></div>
+<pre><code>##        id          species             island          bill_length_mm  
+##  Min.   :  1.0   Length:515         Length:515         Min.   :  0.50  
+##  1st Qu.:129.5   Class :character   Class :character   1st Qu.: 39.40  
+##  Median :258.0   Mode  :character   Mode  :character   Median : 43.80  
+##  Mean   :258.0                                         Mean   : 45.62  
+##  3rd Qu.:386.5                                         3rd Qu.: 48.20  
+##  Max.   :515.0                                         Max.   :999.00  
+##                                                        NA&#39;s   :25      
+##  bill_depth_mm   flipper_length_mm  body_mass_g        sex           
+##  Min.   :12.60   Min.   :   1.0    Min.   : -500   Length:515        
+##  1st Qu.:15.60   1st Qu.: 189.0    1st Qu.: 3547   Class :character  
+##  Median :17.60   Median : 196.0    Median : 4041   Mode  :character  
+##  Mean   :17.25   Mean   : 219.3    Mean   : 4328                     
+##  3rd Qu.:18.80   3rd Qu.: 213.0    3rd Qu.: 4852                     
+##  Max.   :21.70   Max.   :9999.0    Max.   :99000                     
+##  NA&#39;s   :21      NA&#39;s   :20        NA&#39;s   :25                        
+##       year         notes          
+##  Min.   :1999   Length:515        
+##  1st Qu.:2007   Class :character  
+##  Median :2008   Mode  :character  
+##  Mean   :2008                     
+##  3rd Qu.:2009                     
+##  Max.   :2099                     
+## </code></pre>
 </div>
-<div id="variables" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Variables</h2>
+</div>
+<div id="dataset-structure" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Dataset Structure</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">glimpse</span>(data)</span></code></pre></div>
+<pre><code>## Rows: 515
+## Columns: 10
+## $ id                &lt;dbl&gt; 4, 322, 105, 309, 69, 101, 334, 406, 58, 49, 467, 45…
+## $ species           &lt;chr&gt; &quot;Gentoo&quot;, &quot;Adelie&quot;, &quot;Gentoo&quot;, &quot;Adelie&quot;, &quot;Adelie&quot;, &quot;A…
+## $ island            &lt;chr&gt; &quot;Biscoe&quot;, &quot;Torgersen&quot;, &quot;Biscoe&quot;, &quot;Torgersen&quot;, &quot;Torge…
+## $ bill_length_mm    &lt;dbl&gt; 46.8, 35.9, 48.6, 37.9, 39.3, 41.9, 46.1, 41.8, 35.9…
+## $ bill_depth_mm     &lt;dbl&gt; 15.4, 19.0, 14.7, 19.8, 19.6, 18.9, 14.6, 17.9, 17.5…
+## $ flipper_length_mm &lt;dbl&gt; 217, 201, 217, 198, NA, 194, 208, 192, 193, 206, 192…
+## $ body_mass_g       &lt;dbl&gt; 4706, 2886, 4644, 3514, 3514, 3080, 4874, 4222, 4254…
+## $ sex               &lt;chr&gt; NA, &quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;mal…
+## $ year              &lt;dbl&gt; 2009, 2007, 2009, 2007, 2009, 2007, 2007, 2008, 2009…
+## $ notes             &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</code></pre>
+</div>
+<div id="variables" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Variables</h2>
 <p>Describe the variables used in the analysis.</p>
 </div>
-<div id="initial-exploration" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Initial Exploration</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># Initial exploration</span></span></code></pre></div>
+<div id="initial-exploration" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Initial Exploration</h2>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># Initial exploration</span></span></code></pre></div>
 </div>
-<div id="initial-observations" class="section level2" number="5.4">
-<h2><span class="header-section-number">5.4</span> Initial Observations</h2>
+<div id="initial-observations" class="section level2" number="5.5">
+<h2><span class="header-section-number">5.5</span> Initial Observations</h2>
 <p>Describe your initial observations.</p>
 </div>
 </div>
@@ -2952,7 +3004,7 @@ This includes examining the structure of the data, identifying variable types, e
 <div id="missing-values" class="section level2" number="6.1">
 <h2><span class="header-section-number">6.1</span> Missing Values</h2>
 <p>Describe how missing values were identified and handled.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># Missing values analysis</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># Missing values analysis</span></span></code></pre></div>
 </div>
 <div id="data-cleaning" class="section level2" number="6.2">
 <h2><span class="header-section-number">6.2</span> Data Cleaning</h2>
@@ -2971,7 +3023,7 @@ This includes examining the structure of the data, identifying variable types, e
 <h1><span class="header-section-number">7</span> 4. Exploratory Data Analysis (EDA)</h1>
 <div id="distribution-analysis" class="section level2" number="7.1">
 <h2><span class="header-section-number">7.1</span> Distribution Analysis</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Distribution analysis</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># Distribution analysis</span></span></code></pre></div>
 <div id="interpretation" class="section level3" number="7.1.1">
 <h3><span class="header-section-number">7.1.1</span> Interpretation</h3>
 <p>Describe your findings.</p>
@@ -2979,7 +3031,7 @@ This includes examining the structure of the data, identifying variable types, e
 </div>
 <div id="relationship-analysis" class="section level2" number="7.2">
 <h2><span class="header-section-number">7.2</span> Relationship Analysis</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># Relationship analysis</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co"># Relationship analysis</span></span></code></pre></div>
 <div id="interpretation-1" class="section level3" number="7.2.1">
 <h3><span class="header-section-number">7.2.1</span> Interpretation</h3>
 <p>Describe your findings.</p>
@@ -2987,7 +3039,7 @@ This includes examining the structure of the data, identifying variable types, e
 </div>
 <div id="correlation-analysis" class="section level2" number="7.3">
 <h2><span class="header-section-number">7.3</span> Correlation Analysis</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># Correlation analysis</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co"># Correlation analysis</span></span></code></pre></div>
 <div id="interpretation-2" class="section level3" number="7.3.1">
 <h3><span class="header-section-number">7.3.1</span> Interpretation</h3>
 <p>Describe your findings.</p>
@@ -2995,7 +3047,7 @@ This includes examining the structure of the data, identifying variable types, e
 </div>
 <div id="outlier-analysis" class="section level2" number="7.4">
 <h2><span class="header-section-number">7.4</span> Outlier Analysis</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># Outlier analysis</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># Outlier analysis</span></span></code></pre></div>
 <div id="interpretation-3" class="section level3" number="7.4.1">
 <h3><span class="header-section-number">7.4.1</span> Interpretation</h3>
 <p>Describe your findings.</p>
@@ -3016,11 +3068,11 @@ This includes examining the structure of the data, identifying variable types, e
 </div>
 <div id="implementation" class="section level3" number="8.1.2">
 <h3><span class="header-section-number">8.1.2</span> Implementation</h3>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># Model implementation</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co"># Model implementation</span></span></code></pre></div>
 </div>
 <div id="results" class="section level3" number="8.1.3">
 <h3><span class="header-section-number">8.1.3</span> Results</h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># Model evaluation</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co"># Model evaluation</span></span></code></pre></div>
 </div>
 <div id="interpretation-4" class="section level3" number="8.1.4">
 <h3><span class="header-section-number">8.1.4</span> Interpretation</h3>
@@ -3035,11 +3087,11 @@ This includes examining the structure of the data, identifying variable types, e
 </div>
 <div id="implementation-1" class="section level3" number="8.2.2">
 <h3><span class="header-section-number">8.2.2</span> Implementation</h3>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># Model implementation</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="co"># Model implementation</span></span></code></pre></div>
 </div>
 <div id="results-1" class="section level3" number="8.2.3">
 <h3><span class="header-section-number">8.2.3</span> Results</h3>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># Model evaluation</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="co"># Model evaluation</span></span></code></pre></div>
 </div>
 <div id="interpretation-5" class="section level3" number="8.2.4">
 <h3><span class="header-section-number">8.2.4</span> Interpretation</h3>

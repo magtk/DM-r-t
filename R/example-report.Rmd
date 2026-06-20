@@ -139,7 +139,49 @@ Particular attention is given to missing values, inconsistencies, unusual observ
 
 ## Dataset Description
 
-Provide a general description of the dataset.
+```{r libs, include=FALSE}
+# install.packages("here")
+
+library(tidyverse)
+
+library(here)
+```
+
+
+The dataset was imported and inspected to understand its structure, variable types, and overall characteristics. 
+
+An initial review was performed to identify the number of observations, available variables, data types, and potential data quality issues that may require attention during the preparation phase.
+
+
+
+```{r}
+
+data <- read_csv(
+  here("data", "penguins_mess.csv")
+)
+
+```
+
+### Basic Dataset Information
+
+```{r}
+dim(data)
+```
+So dataset has `r nrow(data)` observations and `r ncol(data)` variables.
+
+
+Summary statistics
+```{r}
+summary(data)
+```
+
+
+## Dataset Structure
+
+```{r}
+glimpse(data)
+```
+
 
 ## Variables
 

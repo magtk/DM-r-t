@@ -16,7 +16,7 @@ Additional implementations and examples may be added in future releases.
 
 ### Data
 
-- `data/Titanic2Clean.csv` – sample dataset used in the examples
+- `data/penguins_mess.csv` – sample dataset used in the examples
 
 
 
