@@ -1,0 +1,257 @@
+---
+title: "Data Mining Project Report Template"
+author: "Magdalena A. Tkacz"
+subtitle: "Suggested Report Template (Optional)"
+output:
+  html_document:
+    df_print: paged
+    theme: spacelab
+    highlight: zenburn
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: true
+      smooth_scroll: true
+  pdf_document:
+    toc: true
+    toc_depth: 3
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+---
+title: "Data Mining Project"
+author: "Student Name"
+date: "`r Sys.Date()`"
+output:
+  pdf_document:
+    toc: true
+    toc_depth: 3
+---
+
+<div style="
+background-color:#e6d7eb;
+border-left:8px solid #5c0775;
+padding:12px 16px;
+margin:16px 0;
+color:#111111;
+">
+
+This document provides an example report structure based on the CRISP-DM methodology. 
+
+Students may use, modify, or extend the template as appropriate for their project.
+
+</div>
+
+# Assessment Summary
+
+Student name: ______________________
+
+Intended grade: ☐ 3.0 ☐ 3.5 ☐ 4.0 ☐ 4.5 ☐ 5.0
+
+# Student Declaration
+
+By submitting this report, I declare that:
+
+- I understand all parts of the submitted work;
+- I am able to explain and justify the analytical decisions presented in the report;
+- the self-assessment table has been completed honestly;
+- any use of AI tools was limited to assistance and does not substitute for my own understanding of the analysis;
+- all external sources and tools used during the project have been properly acknowledged.
+
+Submission of this report constitutes acceptance of this declaration.
+
+# 1. Business Understanding
+
+## Problem Statement
+
+Describe the problem addressed in the project.
+
+## Objective
+
+Define the objective of the analysis.
+
+## Expected Outcome
+
+Describe the expected outcome and its potential usefulness.
+
+# 2. Data Understanding
+
+## Dataset Description
+
+Provide a general description of the dataset.
+
+## Variables
+
+Describe the variables used in the analysis.
+
+## Initial Exploration
+
+```{r}
+# Initial exploration
+```
+
+## Initial Observations
+
+Describe your initial observations.
+
+# 3. Data Preparation
+
+## Missing Values
+
+Describe how missing values were identified and handled.
+
+```{r}
+# Missing values analysis
+```
+
+## Data Cleaning
+
+Describe any cleaning operations performed.
+
+## Transformations
+
+Describe any transformations applied to the data.
+
+## Feature Selection / Engineering
+
+Describe any variables removed, added, or modified.
+
+# 4. Exploratory Data Analysis (EDA)
+
+## Distribution Analysis
+
+```{r}
+# Distribution analysis
+```
+
+### Interpretation
+
+Describe your findings.
+
+## Relationship Analysis
+
+```{r}
+# Relationship analysis
+```
+
+### Interpretation
+
+Describe your findings.
+
+## Correlation Analysis
+
+```{r}
+# Correlation analysis
+```
+
+### Interpretation
+
+Describe your findings.
+
+## Outlier Analysis
+
+```{r}
+# Outlier analysis
+```
+
+### Interpretation
+
+Describe your findings.
+
+## Summary of EDA
+
+Summarize the most important observations.
+
+# 5. Modeling
+
+## Model 1
+
+### Model Description
+
+Explain why this model was selected.
+
+### Implementation
+
+```{r}
+# Model implementation
+```
+
+### Results
+
+```{r}
+# Model evaluation
+```
+
+### Interpretation
+
+Interpret the results.
+
+## Model 2
+
+### Model Description
+
+Explain why this model was selected.
+
+### Implementation
+
+```{r}
+# Model implementation
+```
+
+### Results
+
+```{r}
+# Model evaluation
+```
+
+### Interpretation
+
+Interpret the results.
+
+# 6. Evaluation
+
+## Model Comparison
+
+Provide a comparison of the evaluated models.
+
+| Metric | Model 1 | Model 2 |
+|---------|---------|---------|
+| | | |
+| | | |
+| | | |
+
+## Discussion
+
+Discuss the strengths and weaknesses of the models.
+
+## Limitations
+
+Discuss any limitations of the data, methodology, or results.
+
+# 7. Recommendations
+
+Provide recommendations based on the results of the analysis.
+
+# 8. Conclusions
+
+## Summary
+
+Summarize the project.
+
+## Lessons Learned
+
+Describe what was learned during the analysis.
+
+## Future Work
+
+Suggest possible future improvements or extensions.
+
+# References
+
+List all external sources used.
+
+# Appendix (Optional)
+
+Additional tables, figures, code snippets, or supplementary material.

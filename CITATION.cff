@@ -1,0 +1,48 @@
+```yaml
+cff-version: 1.2.0
+
+title: "MagTk's Data Mining Report Template"
+message: "If you use this repository, please cite it as follows."
+
+type: software
+
+authors:
+  - family-names: "Tkacz"
+    given-names: "Magdalena A."
+    orcid: "https://orcid.org/0000-0002-3931-0474"
+
+version: "0.1.0"
+date-released: 2026-06-20
+
+license: "CC-BY-NC-4.0"
+
+abstract: >
+  Suggested report template for Data Mining projects
+  based on the CRISP-DM methodology, including a reusable
+  R Markdown template, example report, and supporting materials.
+  
+keywords:
+  - data-mining
+  - crisp-dm
+  - rmarkdown
+  - analytics
+  - machine-learning
+  - education
+  - teaching
+  - report-template
+
+repository-code: "https://github.com/magtk/DM-r-t"
+
+url: "https://github.com/magtk/DM-r-t"
+
+preferred-citation:
+  type: software
+  authors:
+    - family-names: "Tkacz"
+      given-names: "Magdalena A."
+      orcid: "https://orcid.org/0000-0002-3931-0474"
+  title: "MagTk's Data Mining Report Template"
+  version: "0.1.0"
+  date-released: 2026-06-20
+  url: "https://github.com/magtk/DM-r-t"
+```
