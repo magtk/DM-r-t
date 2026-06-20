@@ -3,7 +3,7 @@ title: "Example Report"
 author: "Magdalena A. Tkacz"
 subtitle: "dataset: <to-do>"
 output:
-  html_document:
+  bookdown::html_document2:
     df_print: paged
     theme: spacelab
     highlight: zenburn
@@ -12,13 +12,18 @@ output:
     toc_float:
       collapsed: true
       smooth_scroll: true
-  pdf_document:
+  bookdown::pdf_document2:
     toc: true
     toc_depth: 3
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.path = "figures/"
+)
 ```
 
 <div style="
@@ -33,13 +38,20 @@ This document provides an example report structure based on the CRISP-DM methodo
 
 Students may use, modify, or extend the template as appropriate for their project.
 
+The practical examples presented in this report are based on `penguin_mess`, a modified version of the `palmerpenguins` dataset created for educational purposes.
+
+The dataset was intentionally altered to include selected data quality issues and should not be regarded as the original `palmerpenguins` dataset.
+
+
 </div>
+
+
 
 # Assessment Summary
 
-Student name: ______________________
+Student name: Pen Guin
 
-Intended grade: ☐ 3.0 ☐ 3.5 ☐ 4.0 ☐ 4.5 ☐ 5.0
+Intended grade:☐ 3.0   ☐ 3.5   ☑ 4.0   ☐ 4.5   ☐ 5.0
 
 # Student Declaration
 
@@ -53,21 +65,77 @@ By submitting this report, I declare that:
 
 Submission of this report constitutes acceptance of this declaration.
 
+# 0. Executive Summary
+
+## Report Summary
+This report presents a complete Data Mining workflow based on the CRISP-DM methodology. The analysis uses the penguin_mess dataset, a modified version of the Palmer Penguins dataset prepared for educational purposes.
+
+The primary objective of the project is to predict penguin species using morphological measurements and selected categorical attributes. 
+
+The analysis follows the CRISP-DM (Cross-Industry Standard Process for Data Mining) methodology, progressing through business understanding, data understanding, data preparation, exploratory analysis, modeling, and evaluation.
+
+
+Two classification models were developed and compared. The results demonstrate the importance of proper data preparation and feature selection when building predictive models.
+
+## Success Criteria
+
+The project will be considered successful if:
+
+- data quality issues are identified and addressed;
+- meaningful exploratory analysis is performed;
+- at least two classification models are developed;
+- model performance is evaluated and compared;
+- conclusions are supported by analytical evidence.
+
 # 1. Business Understanding
+
+The objective of this project is to develop a predictive model capable of identifying penguin species based on available measurements and characteristics.
+
+Although the dataset is educational in nature, the problem reflects a common Data Mining scenario in which historical observations are used to classify new cases. The project also aims to demonstrate the complete CRISP-DM process rather than maximize predictive performance.
+
+The project aims to answer the following question: 
+
+> Can penguin species be accurately predicted using the available measurements and characteristics?
+
+## Project Scope 
+
+The analysis includes: 
+- data understanding and quality assessment; 
+- data preparation and cleaning; 
+- exploratory data analysis (EDA); 
+- development of classification models; 
+- model evaluation and comparison; 
+- interpretation of results. 
+
+The project does not aim to build a production-ready system. Instead, it serves as a demonstration of the CRISP-DM process and fundamental Data Mining techniques.
 
 ## Problem Statement
 
-Describe the problem addressed in the project.
+Given a set of penguin observations containing morphological measurements and categorical characteristics, the objective is to develop a predictive model capable of correctly identifying the species of each penguin.
+
+The project investigates which variables are most informative for species classification and evaluates whether reliable predictions can be obtained from the available data.
 
 ## Objective
 
-Define the objective of the analysis.
+The objective of this project is to investigate whether penguin species can be accurately predicted using available morphological measurements and categorical attributes. 
+
+To achieve this goal, the dataset will be explored, cleaned, and prepared for modeling. Multiple classification models will be developed and compared in order to identify the most suitable approach for this prediction task.
+
 
 ## Expected Outcome
 
-Describe the expected outcome and its potential usefulness.
+The expected outcome of this project is the development of a classification model capable of predicting penguin species based on available measurements and categorical attributes.
+It is expected that the analysis will identify variables that are most informative for species classification and reveal patterns that distinguish different species.
+
+Furthermore, the project is expected to demonstrate the impact of data preparation and feature selection on model performance, as well as provide a comparison of alternative modeling approaches.
+
 
 # 2. Data Understanding
+
+The purpose of this phase is to become familiar with the dataset and assess its suitability for the intended analysis. 
+This includes examining the structure of the data, identifying variable types, evaluating data quality, and detecting potential issues that may affect subsequent stages of the project. 
+
+Particular attention is given to missing values, inconsistencies, unusual observations, and the distribution of individual variables. Understanding these characteristics is essential before proceeding to data preparation and model development.
 
 ## Dataset Description
 
